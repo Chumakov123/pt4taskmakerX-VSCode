@@ -6,6 +6,8 @@
 #include <functional>
 #include "pt4taskmaker.h"
 
+using namespace pt4taskmaker;
+
 vector<int> vn;
 vector<double> vr;
 vector<string> vs;

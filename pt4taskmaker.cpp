@@ -667,68 +667,68 @@ inline int PT4TaskMakerLink::CurrentTest()
     return 0;
 }
 
-void CreateGroup(const char* GroupName, const char* GroupDescription,
+void pt4taskmaker::CreateGroup(const char* GroupName, const char* GroupDescription,
   const char* GroupAuthor, const char* GroupKey,
   int TaskCount, TInitTaskProc InitTaskProc)
 {
         PTLink.CreateGroup(GroupName,GroupDescription, GroupAuthor, GroupKey, TaskCount, InitTaskProc);
 }
 
-void UseTask(const char* GroupName, int TaskNumber)
+void pt4taskmaker::UseTask(const char* GroupName, int TaskNumber)
 {
         PTLink.UseTask(GroupName,TaskNumber);
 }
 
-void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription)
+void pt4taskmaker::UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription)
 {
         PTLink.UseTask(GroupName,TaskNumber,TopicDescription);
 }
 
-void CreateTask(const char* SubgroupName)
+void pt4taskmaker::CreateTask(const char* SubgroupName)
 {
         PTLink.CreateTask(SubgroupName);
 }
 
-void CreateTask()
+void pt4taskmaker::CreateTask()
 {
         PTLink.CreateTask("");
 }
 
-void CreateTask(const char* SubgroupName, int* ProcessCount)
+void pt4taskmaker::CreateTask(const char* SubgroupName, int* ProcessCount)
 {
         PTLink.CreateTask(SubgroupName, ProcessCount);
 }
 
-void CreateTask(int* ProcessCount)
+void pt4taskmaker::CreateTask(int* ProcessCount)
 {
         PTLink.CreateTask(ProcessCount);
 }
 
-int CurrentLanguage()
+int pt4taskmaker::CurrentLanguage()
 {
         return PTLink.CurrentLanguage();
 }
 
-char* CurrentLocale(){
+char* pt4taskmaker::CurrentLocale(){
         return PTLink.CurrentLocale();
 }
 
-char* CurrentVersion()
+char* pt4taskmaker::CurrentVersion()
 {
         return PTLink.CurrentVersion();
 }
 
-int CurrentTest()
+int pt4taskmaker::CurrentTest()
 {
         return PTLink.CurrentTest();
 }
 
-void TaskText(const char* S, int X , int Y)
+void pt4taskmaker::TaskText(const char* S, int X , int Y)
 {
         PTLink.TaskText(S,X,Y);
 }
 
-void TaskText(const char* S)
+void pt4taskmaker::TaskText(const char* S)
 {
         string S1 = S;
         int p1[205], p2[205];
@@ -786,420 +786,420 @@ void TaskText(const char* S)
     }
 }
 
-void DataB(const char* Cmt, bool B, int X, int Y)
+void pt4taskmaker::DataB(const char* Cmt, bool B, int X, int Y)
 {
         PTLink.DataB(Cmt,B,X,Y);
 }
 
-void DataB(bool B, int X, int Y)
+void pt4taskmaker::DataB(bool B, int X, int Y)
 {
         PTLink.DataB("",B,X,Y);
 }
 
-void DataN(const char* Cmt, int N, int X, int Y, int W)
+void pt4taskmaker::DataN(const char* Cmt, int N, int X, int Y, int W)
 {
         PTLink.DataN(Cmt,N,X,Y,W);
 }
 
-void DataN(int N, int X, int Y, int W)
+void pt4taskmaker::DataN(int N, int X, int Y, int W)
 {
         PTLink.DataN("",N,X,Y,W);
 }
 
-void DataN2(const char* Cmt, int  N1, int N2, int  X, int  Y, int  W)
+void pt4taskmaker::DataN2(const char* Cmt, int  N1, int N2, int  X, int  Y, int  W)
 {
         PTLink.DataN(Cmt,N1,N2,X,Y,W);
 }
 
-void DataN2(int  N1, int N2, int  X, int  Y, int  W)
+void pt4taskmaker::DataN2(int  N1, int N2, int  X, int  Y, int  W)
 {
         PTLink.DataN("",N1,N2,X,Y,W);
 }
 
-void DataN3(const char* Cmt, int N1, int  N2, int  N3, int X, int Y, int W)
+void pt4taskmaker::DataN3(const char* Cmt, int N1, int  N2, int  N3, int X, int Y, int W)
 {
         PTLink.DataN(Cmt,N1,N2,N3,X,Y,W);
 }
 
-void DataN3(int N1, int  N2, int  N3, int X, int Y, int W)
+void pt4taskmaker::DataN3(int N1, int  N2, int  N3, int X, int Y, int W)
 {
         PTLink.DataN("",N1,N2,N3,X,Y,W);
 }
 
-void DataR(const char* Cmt, double R, int  X, int Y, int W)
+void pt4taskmaker::DataR(const char* Cmt, double R, int  X, int Y, int W)
 {
         PTLink.DataR(Cmt,R,X,Y,W);
 }
 
-void DataR(double R, int  X, int Y, int W)
+void pt4taskmaker::DataR(double R, int  X, int Y, int W)
 {
         PTLink.DataR("",R,X,Y,W);
 }
 
-void DataR2(const char* Cmt, double R1, double R2, int X, int Y, int W)
+void pt4taskmaker::DataR2(const char* Cmt, double R1, double R2, int X, int Y, int W)
 {
         PTLink.DataR(Cmt,R1,R2,X,Y,W);
 }
 
-void DataR2(double R1, double R2, int X, int Y, int W)
+void pt4taskmaker::DataR2(double R1, double R2, int X, int Y, int W)
 {
         PTLink.DataR("",R1,R2,X,Y,W);
 }
 
-void DataR3(const char* Cmt, double R1, double R2, double R3, int  X, int Y, int W)
+void pt4taskmaker::DataR3(const char* Cmt, double R1, double R2, double R3, int  X, int Y, int W)
 {
         PTLink.DataR(Cmt,R1,R2,R3,X,Y,W);
 }
 
-void DataR3(double R1, double R2, double R3, int  X, int Y, int W)
+void pt4taskmaker::DataR3(double R1, double R2, double R3, int  X, int Y, int W)
 {
         PTLink.DataR("",R1,R2,R3,X,Y,W);
 }
 
-void DataC(const char* Cmt,  char C, int  X, int Y)
+void pt4taskmaker::DataC(const char* Cmt,  char C, int  X, int Y)
 {
         PTLink.DataC(Cmt,C,X,Y);
 }
 
-void DataC(char C, int  X, int Y)
+void pt4taskmaker::DataC(char C, int  X, int Y)
 {
         PTLink.DataC("",C,X,Y);
 }
 
-void DataS(const char* Cmt, const char* S,  int X,  int Y)
+void pt4taskmaker::DataS(const char* Cmt, const char* S,  int X,  int Y)
 {
         PTLink.DataS(Cmt,S,X,Y);
 }
 
-void DataS(const char* S,  int X,  int Y)
+void pt4taskmaker::DataS(const char* S,  int X,  int Y)
 {
         PTLink.DataS("",S,X,Y);
 }
 
-void DataP(const char* Cmt, int NP,  int X,  int Y)
+void pt4taskmaker::DataP(const char* Cmt, int NP,  int X,  int Y)
 {
         PTLink.DataP(Cmt,NP,X,Y);
 }
 
-void DataP(int NP,  int X,  int Y)
+void pt4taskmaker::DataP(int NP,  int X,  int Y)
 {
         PTLink.DataP("",NP,X,Y);
 }
 
-void DataComment(const char* Cmt, int  X, int Y)
+void pt4taskmaker::DataComment(const char* Cmt, int  X, int Y)
 {
         PTLink.DataComment(Cmt,X,Y);
 }
 
-void ResultB(const char* Cmt, bool  B, int X, int Y)
+void pt4taskmaker::ResultB(const char* Cmt, bool  B, int X, int Y)
 {
         PTLink.ResultB(Cmt,B,X,Y);
 }
 
-void ResultB(bool B, int X, int Y)
+void pt4taskmaker::ResultB(bool B, int X, int Y)
 {
         PTLink.ResultB("",B,X,Y);
 }
 
-void ResultN(const char* Cmt, int  N, int X, int Y, int  W)
+void pt4taskmaker::ResultN(const char* Cmt, int  N, int X, int Y, int  W)
 {
         PTLink.ResultN(Cmt,N,X,Y,W);
 }
 
-void ResultN(int N, int X, int Y, int  W)
+void pt4taskmaker::ResultN(int N, int X, int Y, int  W)
 {
         PTLink.ResultN("",N,X,Y,W);
 }
 
-void ResultN2(const char* Cmt, int N1, int N2, int X, int Y, int W)
+void pt4taskmaker::ResultN2(const char* Cmt, int N1, int N2, int X, int Y, int W)
 {
         PTLink.ResultN(Cmt,N1,N2,X,Y,W);
 }
 
-void ResultN2(int N1, int N2, int X, int Y, int W)
+void pt4taskmaker::ResultN2(int N1, int N2, int X, int Y, int W)
 {
         PTLink.ResultN("",N1,N2,X,Y,W);
 }
 
-void ResultN3(const char* Cmt, int N1, int N2, int N3, int X, int Y, int W)
+void pt4taskmaker::ResultN3(const char* Cmt, int N1, int N2, int N3, int X, int Y, int W)
 {
         PTLink.ResultN(Cmt,N1,N2,N3,X,Y,W);
 }
 
-void ResultN3(int N1, int N2, int N3, int X, int Y, int W)
+void pt4taskmaker::ResultN3(int N1, int N2, int N3, int X, int Y, int W)
 {
         PTLink.ResultN("",N1,N2,N3,X,Y,W);
 }
 
-void ResultR(const char* Cmt, double R, int X, int Y, int W)
+void pt4taskmaker::ResultR(const char* Cmt, double R, int X, int Y, int W)
 {
         PTLink.ResultR(Cmt,R,X,Y,W);
 }
 
-void ResultR(double R, int X, int Y, int W)
+void pt4taskmaker::ResultR(double R, int X, int Y, int W)
 {
         PTLink.ResultR("",R,X,Y,W);
 }
 
-void ResultR2(const char* Cmt, double R1, double R2, int X, int Y, int W)
+void pt4taskmaker::ResultR2(const char* Cmt, double R1, double R2, int X, int Y, int W)
 {
         PTLink.ResultR(Cmt,R1,R2,X,Y,W);
 }
 
-void ResultR2(double R1, double R2, int X, int Y, int W)
+void pt4taskmaker::ResultR2(double R1, double R2, int X, int Y, int W)
 {
         PTLink.ResultR("",R1,R2,X,Y,W);
 }
 
-void ResultR3(const char* Cmt, double R1, double  R2, double R3, int X, int Y,  int W)
+void pt4taskmaker::ResultR3(const char* Cmt, double R1, double  R2, double R3, int X, int Y,  int W)
 {
         PTLink.ResultR(Cmt,R1,R2,R3,X,Y,W);
 }
 
-void ResultR3(double R1, double  R2, double R3, int X, int Y,  int W)
+void pt4taskmaker::ResultR3(double R1, double  R2, double R3, int X, int Y,  int W)
 {
         PTLink.ResultR("",R1,R2,R3,X,Y,W);
 }
 
-void ResultC(const char* Cmt,  char C, int X, int Y)
+void pt4taskmaker::ResultC(const char* Cmt,  char C, int X, int Y)
 {
         PTLink.ResultC(Cmt,C,X,Y);
 }
 
-void ResultC(char C, int X, int Y)
+void pt4taskmaker::ResultC(char C, int X, int Y)
 {
         PTLink.ResultC("",C,X,Y);
 }
 
-void ResultS(const char* Cmt, const char* S, int X, int Y)
+void pt4taskmaker::ResultS(const char* Cmt, const char* S, int X, int Y)
 {
         PTLink.ResultS(Cmt, S, X,Y);
 }
 
-void ResultS(const char* S, int X, int Y)
+void pt4taskmaker::ResultS(const char* S, int X, int Y)
 {
         PTLink.ResultS("", S, X,Y);
 }
 
-void ResultP(const char* Cmt, int NP, int X, int Y)
+void pt4taskmaker::ResultP(const char* Cmt, int NP, int X, int Y)
 {
         PTLink.ResultP(Cmt,NP,X,Y);
 }
 
-void ResultP(int NP, int X, int Y)
+void pt4taskmaker::ResultP(int NP, int X, int Y)
 {
         PTLink.ResultP("",NP,X,Y);
 }
 
-void ResultComment(const char* Cmt, int X, int Y)
+void pt4taskmaker::ResultComment(const char* Cmt, int X, int Y)
 {
         PTLink.ResultComment(Cmt,X,Y);
 }
 
-void SetPrecision(int N)
+void pt4taskmaker::SetPrecision(int N)
 {
         PTLink.SetPrecision(N);
 }
 
-void SetRequiredDataCount(int N)
+void pt4taskmaker::SetRequiredDataCount(int N)
 {
         PTLink.SetRequiredDataCount(N);
 }
 
-void SetTestCount(int N)
+void pt4taskmaker::SetTestCount(int N)
 {
         PTLink.SetTestCount(N);
 }
 
-int Center(int I, int  N, int  W, int B)
+int pt4taskmaker::Center(int I, int  N, int  W, int B)
 {
         return PTLink.Center(I,N,W,B);
 }
 
-void DataFileN(const char* FileName, int Y, int W)
+void pt4taskmaker::DataFileN(const char* FileName, int Y, int W)
 {
         PTLink.DataFileN(FileName,Y,W);
 }
 
-void DataFileR(const char* FileName, int Y, int W)
+void pt4taskmaker::DataFileR(const char* FileName, int Y, int W)
 {
         PTLink.DataFileR(FileName,Y,W);
 }
 
-void DataFileC(const char* FileName, int Y, int W)
+void pt4taskmaker::DataFileC(const char* FileName, int Y, int W)
 {
         PTLink.DataFileC(FileName,Y,W);
 }
 
-void DataFileS(const char* FileName, int Y, int W)
+void pt4taskmaker::DataFileS(const char* FileName, int Y, int W)
 {
         PTLink.DataFileS(FileName,Y,W);
 }
 
 
-void DataFileT(const char* FileName, int Y1, int Y2)
+void pt4taskmaker::DataFileT(const char* FileName, int Y1, int Y2)
 {
         PTLink.DataFileT(FileName,Y1,Y2);
 }
 
-void ResultFileN(const char* FileName,  int Y, int W)
+void pt4taskmaker::ResultFileN(const char* FileName,  int Y, int W)
 {
         PTLink.ResultFileN(FileName,Y,W);
 }
 
-void ResultFileR(const char* FileName, int Y, int W)
+void pt4taskmaker::ResultFileR(const char* FileName, int Y, int W)
 {
         PTLink.ResultFileR(FileName, Y,W);
 }
 
-void ResultFileC(const char* FileName,  int Y, int W)
+void pt4taskmaker::ResultFileC(const char* FileName,  int Y, int W)
 {
         PTLink.ResultFileC(FileName,Y,W);
 }
 
 
-void ResultFileS(const char* FileName, int Y, int W)
+void pt4taskmaker::ResultFileS(const char* FileName, int Y, int W)
 {
         PTLink.ResultFileS(FileName,Y,W);
 }
 
-void ResultFileT(const char* FileName, int Y1, int Y2)
+void pt4taskmaker::ResultFileT(const char* FileName, int Y1, int Y2)
 {
         PTLink.ResultFileT(FileName,Y1,Y2);
 }
 
-void SetPointer(int NP, PNode P)
+void pt4taskmaker::SetPointer(int NP, PNode P)
 {
         PTLink.SetPointer(NP,P);
 }
 
-void DataList(int NP, int X, int Y)
+void pt4taskmaker::DataList(int NP, int X, int Y)
 {
         PTLink.DataList(NP,X,Y);
 }
 
 
-void ResultList(int NP, int X, int Y)
+void pt4taskmaker::ResultList(int NP, int X, int Y)
 {
         PTLink.ResultList(NP,X,Y);
 }
 
-void DataBinTree(int NP, int X, int Y1, int Y2)
+void pt4taskmaker::DataBinTree(int NP, int X, int Y1, int Y2)
 {
         PTLink.DataBinTree(NP,X,Y1,Y2);
 }
 
-void ResultBinTree(int NP, int X, int Y1, int Y2)
+void pt4taskmaker::ResultBinTree(int NP, int X, int Y1, int Y2)
 {
         PTLink.ResultBinTree(NP,X,Y1,Y2);
 }
 
-void DataTree(int NP,  int X, int Y1, int Y2)
+void pt4taskmaker::DataTree(int NP,  int X, int Y1, int Y2)
 {
         PTLink.DataTree(NP,X,Y1,Y2);
 }
 
-void ResultTree(int NP, int X, int Y1, int Y2)
+void pt4taskmaker::ResultTree(int NP, int X, int Y1, int Y2)
 {
         PTLink.ResultTree(NP,X,Y1,Y2);
 }
 
-void ShowPointer( int NP)
+void pt4taskmaker::ShowPointer( int NP)
 {
         PTLink.ShowPointer(NP);
 }
 
-void SetNewNode(int NNode)
+void pt4taskmaker::SetNewNode(int NNode)
 {
         PTLink.SetNewNode(NNode);
 }
 
-void SetDisposedNode(int NNode)
+void pt4taskmaker::SetDisposedNode(int NNode)
 {
         PTLink.SetDisposedNode(NNode);
 }
 
-int WordCount()
+int pt4taskmaker::WordCount()
 {
         return PTLink.WordCount();
 }
 
-int SentenceCount()
+int pt4taskmaker::SentenceCount()
 {
         return PTLink.SentenceCount();
 }
 
-int TextCount()
+int pt4taskmaker::TextCount()
 {
         return PTLink.TextCount();
 }
 
-char* WordSample(int N)
+char* pt4taskmaker::WordSample(int N)
 {
         return PTLink.WordSample(N);
 }
 
-char* SentenceSample(int N)
+char* pt4taskmaker::SentenceSample(int N)
 {
         return PTLink.SentenceSample(N);
 }
 
-char* TextSample(int N)
+char* pt4taskmaker::TextSample(int N)
 {
         return PTLink.TextSample(N);
 }
 
-int EnWordCount()
+int pt4taskmaker::EnWordCount()
 {
         return PTLink.EnWordCount();
 }
 
-int EnSentenceCount()
+int pt4taskmaker::EnSentenceCount()
 {
         return PTLink.EnSentenceCount();
 }
 
-int EnTextCount()
+int pt4taskmaker::EnTextCount()
 {
         return PTLink.EnTextCount();
 }
 
-char* EnWordSample(int N)
+char* pt4taskmaker::EnWordSample(int N)
 {
         return PTLink.EnWordSample(N);
 }
 
-char* EnSentenceSample( int N)
+char* pt4taskmaker::EnSentenceSample( int N)
 {
         return PTLink.EnSentenceSample(N);
 }
 
-char* EnTextSample(int N)
+char* pt4taskmaker::EnTextSample(int N)
 {
         return PTLink.EnTextSample(N);
 }
 
-void CommentText(const char* S)
+void pt4taskmaker::CommentText(const char* S)
 {
         PTLink.CommentText(S);
 }
 
-void UseComment(const char* GroupName,const char* SubgroupName)
+void pt4taskmaker::UseComment(const char* GroupName,const char* SubgroupName)
 {
         PTLink.UseComment(GroupName,SubgroupName);
 }
 
-void UseComment(const char* GroupName)
+void pt4taskmaker::UseComment(const char* GroupName)
 {
         PTLink.UseComment(GroupName);
 }
 
-void Subgroup(const char* SubgroupName)
+void pt4taskmaker::Subgroup(const char* SubgroupName)
 {
         PTLink.Subgroup(SubgroupName);
 }
 
-void SetObjectStyle()
+void pt4taskmaker::SetObjectStyle()
 {
         PTLink.SetObjectStyle();
 }
@@ -1209,19 +1209,19 @@ void __stdcall activate(const char * DllName)
         PTLink.activate(DllName);
 }
 
-void SetProcess(int ProcessRank)
+void pt4taskmaker::SetProcess(int ProcessRank)
 {
         PTLink.SetProcess(ProcessRank);
 }
 
-int RandomN(int M, int N)
+int pt4taskmaker::RandomN(int M, int N)
 {
        if (M >= N)
          return M;
        return M + rand()%(N - M + 1);
 }
 
-double RandomR(double A, double B)
+double pt4taskmaker::RandomR(double A, double B)
 {
        if (A >= B)
          return A;

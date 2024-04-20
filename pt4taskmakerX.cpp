@@ -29,7 +29,7 @@ string ErrorMessage(const string& s) {
 }
 
 void ErrorInfo(const string& s) {
-	TaskText(("\B" + ErrorMessage(s) + "\b").c_str(), 0, ye);
+	pt4taskmaker::TaskText(("\B" + ErrorMessage(s) + "\b").c_str(), 0, ye);
 	ye = ye + 1;
 	if (ye > 5) {
 		ye = 0;
@@ -37,11 +37,12 @@ void ErrorInfo(const string& s) {
 }
 
 bool CheckTT() {
+	bool result = ut;
 	if (!nt) {
 		pt4taskmakerX::NewTask("");
 		ErrorInfo(ErrMes5);
 	}
-	return ut;
+	return result;
 }
 
 int wreal(int w, double x) {
@@ -61,9 +62,9 @@ int winteger(int w, int x) {
 
 void pt4taskmakerX::NewTask(const char* topic, const char* tasktext) {
 	if (nt)
-		exit(-1);
-	CreateTask(topic);
-	TaskText(tasktext);
+		return;
+	pt4taskmaker::CreateTask(topic);
+	pt4taskmaker::TaskText(tasktext);
 	nt = true;  // вызвана процедура NewTask
 	ut = false; // было подключено существующее задание (процедурой UseTask)
 	ye = 1;     // текущий номер строки для вывода сообщения об ошибке
@@ -91,7 +92,7 @@ void DataInternal(const char* s, int a, int x, int y, int w) { //TODO Должны под
 		ErrorInfo(ErrMes3);
 		return;
 	}
-	DataN(s, a, x, y, winteger(w, a));
+	pt4taskmaker::DataN(s, a, x, y, winteger(w, a));
 }
 
 void ResInternal(const char* s, int a, int x, int y, int w) { //TODO Должны поддерживаться разные типы данных
@@ -104,13 +105,13 @@ void ResInternal(const char* s, int a, int x, int y, int w) { //TODO Должны подд
 		ErrorInfo(ErrMes4);
 		return;
 	}
-	ResultN(s, a, x, y, winteger(w, a));
+	pt4taskmaker::ResultN(s, a, x, y, winteger(w, a));
 }
 
 void pt4taskmakerX::DataComm(const char* comm) {
 	if (CheckTT()) return;
 	++yd;
-	DataComment(comm, 0, yd);
+	pt4taskmaker::DataComment(comm, 0, yd);
 }
 void pt4taskmakerX::Data(const char* comm, int a) {
 	if (CheckTT()) return;
@@ -131,7 +132,7 @@ void pt4taskmakerX::ResComm(const char* comm)
 {
 	if (CheckTT()) return;
 	++yr;
-	ResultComment(comm, 0, yr);
+	pt4taskmaker::ResultComment(comm, 0, yr);
 }
 void pt4taskmakerX::Res(const char* comm, int a)
 {
@@ -157,19 +158,19 @@ void pt4taskmakerX::SetWidth(int n) {
 //void pt4taskmakerX::SetPrecision(int n);
 void pt4taskmakerX::SetTestCount(int n) {
 	if (CheckTT()) return;
-	SetTestCount(n);
+	pt4taskmaker::SetTestCount(n);
 }
 void pt4taskmakerX::SetRequiredDataCount(int n) {
 	if (CheckTT()) return;
-	SetRequiredDataCount(n);
+	pt4taskmaker::SetRequiredDataCount(n);
 }
 
 int pt4taskmakerX::CurrentTest() {
 	if (CheckTT()) return 0;
-	return CurrentTest();
+	return pt4taskmaker::CurrentTest();
 }
 int pt4taskmakerX::Random(int M, int N) {
-	return RandomN(M, N);
+	return pt4taskmaker::RandomN(M, N);
 }
 //double pt4taskmakerX::Random(double A, double B);
 //double pt4taskmakerX::Random1(double A, double B);
@@ -209,39 +210,51 @@ bool AcceptedLanguage(int opt) {
 void __stdcall RunTask(int num) {
 	//TODO доделать RunTask(int num)
 	bool ut0;
-	if ((num > 0) && (num <= TaskCount)) {
-		tasks[num - 1]();
-	}
-	
+	try {
+		if ((num > 0) && (num <= TaskCount)) {
+			tasks[num - 1]();
+			nt = false;
+			ut0 = ut;
+			ut = false;
+		}
+	} catch (const std::exception& e) {
+        Show(e.what());
+    }
 	nt = false;
 	ut0 = ut;
 	ut = false;
 
-	if (ut0) exit(-1);
+	if (ut0) return;
+	if (nd == 0 && !fd) {
+        Show(ErrMes6);
+    }
+    if (nr == 0 && !fr) {
+        Show(ErrMes7);
+    }
 }
 
 void pt4taskmakerX::NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options)
 {
 	if (!AcceptedLanguage(Options)) 
-		exit(-1); // недопустимый текущий язык
+		return; // недопустимый текущий язык
 	string GroupKey = "GK123"; //TODO доделать создание ключа группы
 	//TODO доделать NewGroup
-	CreateGroup(GroupName, GroupDescription, GroupAuthor,
+	pt4taskmaker::CreateGroup(GroupName, GroupDescription, GroupAuthor,
 		GroupKey.c_str(), TaskCount, RunTask);
 }
 void pt4taskmakerX::ActivateNET(const char* S)
 {
-	ActivateNET(S);
+	//pt4taskmaker::ActivateNET(S);
 }
 
-void pt4taskmakerX::UseTask(const char* GroupName, const char* TaskNumber) {
-	if (ut) exit(-1);
-	UseTask(GroupName, TaskNumber);
+void pt4taskmakerX::UseTask(const char* GroupName, int TaskNumber) {
+	if (ut) return;
+	pt4taskmaker::UseTask(GroupName, TaskNumber);
 	ut = true;
 }
-void pt4taskmakerX::UseTask(const char* GroupName, const char* TaskNumber, const char* TopicDescription) {
-	if (ut) exit(-1);
-	UseTask(GroupName, TaskNumber, TopicDescription);
+void pt4taskmakerX::UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription) {
+	if (ut) return;
+	pt4taskmaker::UseTask(GroupName, TaskNumber, TopicDescription);
 	ut = true;
 }
 

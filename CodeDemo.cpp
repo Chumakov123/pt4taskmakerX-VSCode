@@ -1,6 +1,8 @@
 #include <string>
 #include "pt4taskmaker.h"
 
+using namespace pt4taskmaker;
+
 void Task1()
 {
   CreateTask();

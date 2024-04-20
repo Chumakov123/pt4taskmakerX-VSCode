@@ -9,7 +9,7 @@ void __stdcall inittaskgroup() {
 }
 
 DefineTask(Task1) {
-	pt::UseTask("Begin","1");
+	pt::UseTask("Begin",1);
 }
 
 DefineTask(Task2) {

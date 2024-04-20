@@ -72,8 +72,8 @@ namespace pt4taskmakerX
 
 	void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0);
 	void ActivateNET(const char* S);
-	void UseTask(const char* GroupName, const char* TaskNumber);
-	void UseTask(const char* GroupName, const char* TaskNumber, const char* TopicDescription);
+	void UseTask(const char* GroupName, int TaskNumber);
+	void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription);
 
 	//vector<const char*>& GetWords();
 	//vector<const char*>& GetEnWords();
@@ -186,10 +186,10 @@ namespace pt4taskmakerX
 		static void ActivateNET(const char* S) {
 			pt4taskmakerX::ActivateNET(S);
 		}
-		static void UseTask(const char* GroupName, const char* TaskNumber) {
+		static void UseTask(const char* GroupName, int TaskNumber) {
 			pt4taskmakerX::UseTask(GroupName, TaskNumber);
 		}
-		static void UseTask(const char* GroupName, const char* TaskNumber, const char* TopicDescription) {
+		static void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription) {
 			pt4taskmakerX::UseTask(GroupName, TaskNumber, TopicDescription);
 		}
 
