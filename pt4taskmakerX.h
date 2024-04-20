@@ -71,7 +71,6 @@ namespace pt4taskmakerX
 	//const char* RandomName(int len);
 
 	void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0);
-	void ActivateNET(const char* S);
 	void UseTask(const char* GroupName, int TaskNumber);
 	void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription);
 
@@ -182,9 +181,6 @@ namespace pt4taskmakerX
 
 		static void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0) {
 			pt4taskmakerX::NewGroup(GroupDescription, GroupAuthor, Options);
-		}
-		static void ActivateNET(const char* S) {
-			pt4taskmakerX::ActivateNET(S);
 		}
 		static void UseTask(const char* GroupName, int TaskNumber) {
 			pt4taskmakerX::UseTask(GroupName, TaskNumber);

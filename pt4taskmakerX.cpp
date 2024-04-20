@@ -1,3 +1,4 @@
+#include <typeinfo>
 #include "pt4taskmakerX.h"
 
 #define alphabet "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -13,7 +14,7 @@ char GroupName[100];
 int yd, yr, ye, nd, nr, pr, wd;
 bool nt, ut, fd, fr;
 string fmt;
-void (*tasks[100])();
+void (*tasks[1000])();
 int TaskCount = 0;
 
 void pt4taskmakerX::RegisterTaskFunction(void (*task)()) {
@@ -192,8 +193,17 @@ void pt4taskmakerX::GetGroupName(const char* FilePath) {
 		result = str.substr(lastSlash + 1);
 	}
 
-	// удаление префикса PT4
-	//result.erase(0, 3);
+    // приведение префикса к верхнему регистру
+    string prefix = result.substr(0, 3);
+    for (size_t i = 0; i < prefix.size(); ++i) {
+        if (prefix[i] >= 'a' && prefix[i] <= 'z') {
+            prefix[i] -= ('a' - 'A'); 
+        }
+    }
+    if (prefix == "PT4") {
+        // удаление префикса PT4
+        result.erase(0, 3);
+	}
 
 	// удаление суффикса, определ€ющего €зык интерфейса
 	size_t underscorePos = result.find('_');
@@ -204,18 +214,18 @@ void pt4taskmakerX::GetGroupName(const char* FilePath) {
 }
 
 bool AcceptedLanguage(int opt) {
-	return true; //TODO проверка €зыка программировани€
+	auto lang = pt4taskmaker::CurrentLanguage();
+    return (lang == lgPascalABCNET) ||
+           ((opt & pt4taskmakerX::OptionAllLanguages) == pt4taskmakerX::OptionAllLanguages) ||
+           ((lang & lgNET) != 0 && (opt & pt4taskmakerX::OptionNETLanguages) == pt4taskmakerX::OptionNETLanguages) ||
+           ((lang & lgPascal) == lgPascal && (opt & pt4taskmakerX::OptionPascalLanguages) == pt4taskmakerX::OptionPascalLanguages);
 }
 
 void __stdcall RunTask(int num) {
-	//TODO доделать RunTask(int num)
 	bool ut0;
 	try {
 		if ((num > 0) && (num <= TaskCount)) {
 			tasks[num - 1]();
-			nt = false;
-			ut0 = ut;
-			ut = false;
 		}
 	} catch (const std::exception& e) {
         Show(e.what());
@@ -237,14 +247,23 @@ void pt4taskmakerX::NewGroup(const char* GroupDescription, const char* GroupAuth
 {
 	if (!AcceptedLanguage(Options)) 
 		return; // недопустимый текущий €зык
+	if (TaskCount == 0) {
+		string name = GroupName;
+		Show("√руппа" + name + " не содержит заданий.");
+		return;
+	}
+	if (TaskCount > 999) {
+		string name = GroupName;
+		Show("√руппа" + name + " содержит более 999 заданий.");
+		return;
+	}
 	string GroupKey = "GK123"; //TODO доделать создание ключа группы
-	//TODO доделать NewGroup
+	if ((Options & OptionUseAddition) == OptionUseAddition)
+		GroupKey += "#UseAddition#";
+	if ((Options & OptionHideExamples) == OptionHideExamples)
+		GroupKey += "#HideExamples#";
 	pt4taskmaker::CreateGroup(GroupName, GroupDescription, GroupAuthor,
 		GroupKey.c_str(), TaskCount, RunTask);
-}
-void pt4taskmakerX::ActivateNET(const char* S)
-{
-	//pt4taskmaker::ActivateNET(S);
 }
 
 void pt4taskmakerX::UseTask(const char* GroupName, int TaskNumber) {
