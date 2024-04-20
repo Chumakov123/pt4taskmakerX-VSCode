@@ -3,12 +3,12 @@
 #include "pt4taskmaker.h"
 
 //------------------------------------------------------------------------------
-// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ Р·Р°РґР°С‡РЅРёРєР° Programming Taskbook 4.23
+// Конструктор для электронного задачника Programming Taskbook 4.23
 //------------------------------------------------------------------------------
-// РњРѕРґСѓР»СЊ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РґРёРЅР°РјРёС‡РµСЃРєРёС…-Р±РёР±Р»РёРѕС‚РµРє СЃ РіСЂСѓРїРїР°РјРё Р·Р°РґР°РЅРёР№ РЅР° СЏР·С‹РєРµ C++
+// Модуль для создания динамических-библиотек с группами заданий на языке C++
 //
-// Copyright (c) 2013-2023 Рњ.Р­.РђР±СЂР°РјСЏРЅ
-// Р­Р»РµРєС‚СЂРѕРЅРЅС‹Р№ Р·Р°РґР°С‡РЅРёРє Programming Taskbook Copyright (c) Рњ.Р­.РђР±СЂР°РјСЏРЅ,1998-2023
+// Copyright (c) 2013-2023 М.Э.Абрамян
+// Электронный задачник Programming Taskbook Copyright (c) М.Э.Абрамян,1998-2023
 //------------------------------------------------------------------------------
 
 
@@ -78,9 +78,9 @@ protected :
                 TProc           setobjectstyle_;
                 TProcSvN        createtask2_;
                 TProcN          setprocess_;
-                TSFunc          currentversion_; // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.10
-                TNFunc          currenttest_; // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.11
-                TProcSNS        usetaskex_; // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.19
+                TSFunc          currentversion_; // добавлено в версии 4.10
+                TNFunc          currenttest_; // добавлено в версии 4.11
+                TProcSNS        usetaskex_; // добавлено в версии 4.19
                 TMsgBox         msgbox_;
                 HMODULE         FHandle, User32Handle ;
 
@@ -106,7 +106,7 @@ public:
         inline void CreateTask(int *);
         inline int CurrentLanguage();
         inline char* CurrentLocale();
-        inline char* CurrentVersion();  // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.10
+        inline char* CurrentVersion();  // добавлено в версии 4.10
         inline void TaskText(const char* S, int X , int Y);
         inline void DataB(const char*  Cmt, bool B, int X, int Y);
         inline void DataN(const char* Cmt, int N, int X, int Y, int W);
@@ -173,8 +173,8 @@ public:
         inline void SetObjectStyle();
         inline void activate(const char * DllName);
         inline void SetProcess(int ProcessRank);
-        inline int CurrentTest(); // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.11
-        inline void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription); // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.19
+        inline int CurrentTest(); // добавлено в версии 4.11
+        inline void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription); // добавлено в версии 4.19
 };
 
 
@@ -256,9 +256,9 @@ void PT4TaskMakerLink::activate(const char* DllName) {
                 setobjectstyle_ = (TProc) GetProcAddress(FHandle, "setobjectstyle");
                 createtask2_ = (TProcSvN) GetProcAddress(FHandle, "createtask2");
                 setprocess_ = (TProcN) GetProcAddress(FHandle, "setprocess");
-                currentversion_ = (TSFunc) GetProcAddress(FHandle, "currentversion"); // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.10
-                currenttest_ = (TNFunc) GetProcAddress(FHandle, "curt"); // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.11
-                usetaskex_ = (TProcSNS) GetProcAddress(FHandle, "usetaskex"); // РґРѕР±Р°РІР»РµРЅРѕ РІ РІРµСЂСЃРёРё 4.19
+                currentversion_ = (TSFunc) GetProcAddress(FHandle, "currentversion"); // добавлено в версии 4.10
+                currenttest_ = (TNFunc) GetProcAddress(FHandle, "curt"); // добавлено в версии 4.11
+                usetaskex_ = (TProcSNS) GetProcAddress(FHandle, "usetaskex"); // добавлено в версии 4.19
 }
 
 inline void PT4TaskMakerLink::CreateGroup(      const char*             GroupName, 

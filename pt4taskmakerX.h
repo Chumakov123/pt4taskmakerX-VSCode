@@ -6,7 +6,7 @@
 
 #include "pt4taskmaker.h"
 
-// РјР°РєСЂРѕСЃ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РґР°РЅРёСЏ РІ СЃРїРёСЃРѕРє РІСЃРµС… Р·Р°РґР°РЅРёР№ РіСЂСѓРїРїС‹
+// макрос для добавления задания в список всех заданий группы
 #define DefineTask(name) \
     void name(); \
     struct name ## _Registrar { \
@@ -14,7 +14,7 @@
     } name ## _registrar_instance; \
     void name()
 
-// РјР°РєСЂРѕСЃ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РЅР°Р·РІР°РЅРёСЏ РіСЂСѓРїРїС‹ Р·Р°РґР°РЅРёР№
+// макрос для получения названия группы заданий
 #define DefineGroupName \
     struct _GroupName { \
         _GroupName() { GetGroupName(__FILE__); } \
@@ -22,11 +22,11 @@
 
 namespace pt4taskmakerX
 {
-	const int OptionAllLanguages = 1;       // РіСЂСѓРїРїР° РґРѕСЃС‚СѓРїРЅР° РґР»СЏ РІСЃРµС… СЏР·С‹РєРѕРІ
-	const int OptionPascalLanguages = 2;    // РіСЂСѓРїРїР° РґРѕСЃС‚СѓРїРЅР° РґР»СЏ РІСЃРµС… СЂРµР°Р»РёР·Р°С†РёР№ РџР°СЃРєР°Р»СЏ
-	const int OptionNETLanguages = 4;       // РіСЂСѓРїРїР° РґРѕСЃС‚СѓРїРЅР° РґР»СЏ РІСЃРµС… NET-СЏР·С‹РєРѕРІ
-	const int OptionUseAddition = 8;        // РіСЂСѓРїРїР° РґРѕСЃС‚СѓРїРЅР° С‚РѕР»СЊРєРѕ РїСЂРё РЅР°Р»РёС‡РёРё С„Р°Р№Р»Р° РґРѕРїРѕР»РЅРµРЅРёР№
-	const int OptionHideExamples = 16;      // РЅРµ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ СЂР°Р·РґРµР» СЃ РїСЂРёРјРµСЂРѕРј РІРµСЂРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ
+	const int OptionAllLanguages = 1;       // группа доступна для всех языков
+	const int OptionPascalLanguages = 2;    // группа доступна для всех реализаций Паскаля
+	const int OptionNETLanguages = 4;       // группа доступна для всех NET-языков
+	const int OptionUseAddition = 8;        // группа доступна только при наличии файла дополнений
+	const int OptionHideExamples = 16;      // не отображать раздел с примером верного решения
 
 	void RegisterTaskFunction(void (*task)());
 	void GetGroupName(const char* FilePath);
@@ -35,7 +35,7 @@ namespace pt4taskmakerX
 	void NewTask(const char* tasktext);
 
 	void DataComm(const char* comm);
-	void Data(const char* comm, int a); //TODO Р·РґРµСЃСЊ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСЂРѕРёР·РІРѕР»СЊРЅС‹Рј, Р° РЅРµ С‚РѕР»СЊРєРѕ int
+	void Data(const char* comm, int a); //TODO здесь тип должен быть произвольным, а не только int
 	//void Data(const char* comm1, int a1, const char* comm2);
 	//void Data(const char* comm1, int a1, const char* comm2, int a2);
 	//void Data(const char* comm1, int a1, const char* comm2, int a2, const char* comm3);
@@ -47,7 +47,7 @@ namespace pt4taskmakerX
 	//void Data(const std::vector<const char*>& seq);
 
 	void ResComm(const char* comm);
-	void Res(const char* comm, int a); //TODO Р·РґРµСЃСЊ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСЂРѕРёР·РІРѕР»СЊРЅС‹Рј, Р° РЅРµ С‚РѕР»СЊРєРѕ int
+	void Res(const char* comm, int a); //TODO здесь тип должен быть произвольным, а не только int
 	//void Res(const char* comm1, int a1, const char* comm2);
 	//void Res(const char* comm1, int a1, const char* comm2, int a2);
 	//void Res(const char* comm1, int a1, const char* comm2, int a2, const char* comm3);
