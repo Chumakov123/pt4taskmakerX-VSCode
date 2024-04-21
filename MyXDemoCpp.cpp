@@ -25,13 +25,12 @@ DefineTask(Task2) {
 }
 
 DefineTask(Task3) {
-	pt::NewTask("Вычитание целых чисел",
-		"Найти значение выражения ~{a} -~{b}");
+	pt::NewTask("Вычитание и сложение целых чисел",
+		"Найти значение выражений~{a} -~{b} и~{a} +~{b}");
 	int a = pt::Random(1, 99);
 	int b = pt::Random(1, 99);
-	pt::SetWidth(5);
-	pt::Data("a = ", a);
-	pt::Data("b = ", b);
-	pt::Res("S = ", a - b);
+	const char* s = "Привет";
+	pt::Data("a = ", a, "b = ", b, "s = ", s);
+	pt::Res("D = ", a - b, "S = ", a + b);
 	pt::SetTestCount(5);
 }

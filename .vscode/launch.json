@@ -20,8 +20,8 @@
             "logging": {
                 "moduleLoad": false
              },
-             "preLaunchTask": "Build and compress with UPX" 
-            //"preLaunchTask": "C/C++: g++.exe build active file", 
+            //"preLaunchTask": "Build and compress with UPX" 
+            "preLaunchTask": "C/C++: g++.exe build active file", 
         }
 
     ]

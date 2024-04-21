@@ -1,19 +1,13 @@
-#include <typeinfo>
+#include <cmath>
+#include <random>
+#include <ctime>
 #include "pt4taskmakerX.h"
 
-#define alphabet "0123456789abcdefghijklmnopqrstuvwxyz"
-#define ErrMes1 "Error: Раздел размером более 5 строк не может содержать файловые данные."
-#define ErrMes2 "Error: При наличии файловых данных раздел не может содержать более 5 строк."
-#define ErrMes3 "Error: Количество исходных данных превысило 200."
-#define ErrMes4 "Error: Количество результирующих данных превысило 200."
-#define ErrMes5 "Error: При определении задания первой должна вызываться процедура NewTask."
-#define ErrMes6 "Error: При определении задания не указаны исходные данные."
-#define ErrMes7 "Error: При определении задания не указаны результирующие данные."
-
 char GroupName[100];
+
+string fmt;
 int yd, yr, ye, nd, nr, pr, wd;
 bool nt, ut, fd, fr;
-string fmt;
 void (*tasks[1000])();
 int TaskCount = 0;
 
@@ -83,46 +77,29 @@ void pt4taskmakerX::NewTask(const char* tasktext) {
 	pt4taskmakerX::NewTask("", tasktext);
 }
 
-void DataInternal(const char* s, int a, int x, int y, int w) { //TODO Должны поддерживаться разные типы данных
-	if ((y > 0) && fd) {
-		ErrorInfo(ErrMes2);
-		return;
-	}
-	++nd;
-	if (nd > 200) {
-		ErrorInfo(ErrMes3);
-		return;
-	}
-	pt4taskmaker::DataN(s, a, x, y, winteger(w, a));
-}
-
-void ResInternal(const char* s, int a, int x, int y, int w) { //TODO Должны поддерживаться разные типы данных
-	if ((y > 0) && fr) {
-		ErrorInfo(ErrMes2);
-		return;
-	}
-	++nr;
-	if (nr > 200) {
-		ErrorInfo(ErrMes4);
-		return;
-	}
-	pt4taskmaker::ResultN(s, a, x, y, winteger(w, a));
-}
-
 void pt4taskmakerX::DataComm(const char* comm) {
 	if (CheckTT()) return;
 	++yd;
 	pt4taskmaker::DataComment(comm, 0, yd);
 }
-void pt4taskmakerX::Data(const char* comm, int a) {
-	if (CheckTT()) return;
-	++yd;
-	DataInternal(comm, a, 0, yd, wd);
+
+void pt4taskmakerX::Data(const char* s, bool a, int x, int y, int w) {
+	pt4taskmaker::DataB(s, a, x, y);
 }
-//void pt4taskmakerX::Data(const char* comm1, int a1, const char* comm2);
-//void pt4taskmakerX::Data(const char* comm1, int a1, const char* comm2, int a2);
-//void pt4taskmakerX::Data(const char* comm1, int a1, const char* comm2, int a2, const char* comm3);
-//void pt4taskmakerX::Data(const char* comm1, int a1, const char* comm2, int a2, const char* comm3, int a3);
+
+void pt4taskmakerX::Data(const char* s, int a, int x, int y, int w) {
+	pt4taskmaker::DataN(s, a, x, y, winteger(w, a));
+}
+void pt4taskmakerX::Data(const char* s, double a, int x, int y, int w) {
+	pt4taskmaker::DataR(s, a, x, y, wreal(w, a));
+}
+void pt4taskmakerX::Data(const char* s, char a, int x, int y, int w) {
+	pt4taskmaker::DataC(s, a, x, y);
+}
+void pt4taskmakerX::Data(const char* s, const char* a, int x, int y, int w) {
+	pt4taskmaker::DataS(s, a, x, y);
+}
+
 //void pt4taskmakerX::Data(const std::vector<bool>& seq);
 //void pt4taskmakerX::Data(const std::vector<int>& seq);
 //void pt4taskmakerX::Data(const std::vector<double>& seq);
@@ -135,16 +112,23 @@ void pt4taskmakerX::ResComm(const char* comm)
 	++yr;
 	pt4taskmaker::ResultComment(comm, 0, yr);
 }
-void pt4taskmakerX::Res(const char* comm, int a)
-{
-	if (CheckTT()) return;
-	++yr;
-	ResInternal(comm, a, 0, yr, wd);
+void pt4taskmakerX::Res(const char* s, bool a, int x, int y, int w) {
+	pt4taskmaker::ResultB(s, a, x, y);
 }
-//void pt4taskmakerX::Res(const char* comm1, int a1, const char* comm2);
-//void pt4taskmakerX::Res(const char* comm1, int a1, const char* comm2, int a2);
-//void pt4taskmakerX::Res(const char* comm1, int a1, const char* comm2, int a2, const char* comm3);
-//void pt4taskmakerX::Res(const char* comm1, int a1, const char* comm2, int a2, const char* comm3, int a3);
+
+void pt4taskmakerX::Res(const char* s, int a, int x, int y, int w) {
+	pt4taskmaker::ResultN(s, a, x, y, winteger(w, a));
+}
+void pt4taskmakerX::Res(const char* s, double a, int x, int y, int w) {
+	pt4taskmaker::ResultR(s, a, x, y, wreal(w, a));
+}
+void pt4taskmakerX::Res(const char* s, char a, int x, int y, int w) {
+	pt4taskmaker::ResultC(s, a, x, y);
+}
+void pt4taskmakerX::Res(const char* s, const char* a, int x, int y, int w) {
+	pt4taskmaker::ResultS(s, a, x, y);
+}
+
 //void pt4taskmakerX::Res(const std::vector<bool>& seq);
 //void pt4taskmakerX::Res(const std::vector<int>& seq);
 //void pt4taskmakerX::Res(const std::vector<double>& seq);
@@ -173,9 +157,18 @@ int pt4taskmakerX::CurrentTest() {
 int pt4taskmakerX::Random(int M, int N) {
 	return pt4taskmaker::RandomN(M, N);
 }
-//double pt4taskmakerX::Random(double A, double B);
-//double pt4taskmakerX::Random1(double A, double B);
-//double pt4taskmakerX::Random2(double A, double B);
+double pt4taskmakerX::Random() {
+	return (double)rand()/(double)RAND_MAX;
+}
+double pt4taskmakerX::Random(double A, double B) {
+	return pt4taskmaker::RandomR(A, B);
+}
+double pt4taskmakerX::Random1(double A, double B) {
+	return Random(round(A*10), round(B*10))/10 + Random() * 1.0e-7;
+}
+double pt4taskmakerX::Random2(double A, double B) {
+	return Random(round(A*100), round(B*100))/100 + Random() * 1.0e-7;
+}
 //const char* pt4taskmakerX::RandomName(int len);
 
 void pt4taskmakerX::GetGroupName(const char* FilePath) {
@@ -245,6 +238,7 @@ void __stdcall RunTask(int num) {
 
 void pt4taskmakerX::NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options)
 {
+	srand((unsigned)time(NULL));
 	if (!AcceptedLanguage(Options)) 
 		return; // недопустимый текущий язык
 	if (TaskCount == 0) {
