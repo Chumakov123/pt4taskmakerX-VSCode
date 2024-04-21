@@ -29,8 +29,13 @@ DefineTask(Task3) {
 		"Найти значение выражений~{a} -~{b} и~{a} +~{b}");
 	int a = pt::Random(1, 99);
 	int b = pt::Random(1, 99);
+	vector<int> v;
+	for (int i = 0; i < 30; ++i) {
+		v.push_back(pt::Random(1, 20));
+	}
 	const char* s = "Привет";
 	pt::Data("a = ", a, "b = ", b, "s = ", s);
+	pt::Data(v);
 	pt::Res("D = ", a - b, "S = ", a + b);
 	pt::SetTestCount(5);
 }

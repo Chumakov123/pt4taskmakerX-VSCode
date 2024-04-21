@@ -1,6 +1,7 @@
 #include <cmath>
 #include <random>
 #include <ctime>
+#include <algorithm>
 #include "pt4taskmakerX.h"
 
 char GroupName[100];
@@ -100,11 +101,127 @@ void pt4taskmakerX::Data(const char* s, const char* a, int x, int y, int w) {
 	pt4taskmaker::DataS(s, a, x, y);
 }
 
-//void pt4taskmakerX::Data(const std::vector<bool>& seq);
-//void pt4taskmakerX::Data(const std::vector<int>& seq);
-//void pt4taskmakerX::Data(const std::vector<double>& seq);
-//void pt4taskmakerX::Data(const std::vector<char>& seq);
-//void pt4taskmakerX::Data(const std::vector<const char*>& seq);
+void pt4taskmakerX::Data(const std::vector<bool>& seq) {
+	if (CheckTT())
+		return;
+	int n = seq.size();
+    if (n == 0)
+        return;
+	++yd;
+    int w = 5;
+    int wmax = 80 / (w + 2);
+    if (n > wmax)
+        n = wmax;
+
+	int i = 0;
+    for (auto e : seq) {
+        ++i;
+        if (i > wmax) {
+            ++yd;
+            i = 1;
+        }
+        DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
+    }
+}
+void pt4taskmakerX::Data(const vector<int>& seq) {
+	if (CheckTT()) return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yd;
+	int w = wd;
+	if (w == 0) {
+		auto max_length = max_element(seq.begin(), seq.end(), 
+            [](int a, int b) { return to_string(a).length() < to_string(b).length(); });
+        w = to_string(*max_length).length();
+	}
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yd;
+			i = 1;
+		}
+		DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
+	}
+}
+void pt4taskmakerX::Data(const std::vector<double>& seq) {
+	//TODO vector of doubles
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yd;
+	int w = wd;
+	if (w == 0) {
+		//TODO w := seq.Select(e -> wreal(0, e)(*Format('{0,0:'+fmt+'}', e)*)).Max;
+	}
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+	
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yd;
+			i = 1;
+		}
+		DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
+	}
+}
+void pt4taskmakerX::Data(const std::vector<char>& seq) {
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+	++yd;
+	int w = 3;
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+	
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yd;
+			i = 1;
+		}
+		DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
+	}
+}
+void pt4taskmakerX::Data(const std::vector<const char*>& seq) { //TODO проверить работоспособность
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yd;
+	int max_length = 0;
+    for (const string& s : seq) {
+        max_length = max(max_length, static_cast<int>(s.length()));
+    }
+	int w = max_length + 2;
+	int wmax = 80 / (w + 2);
+    if (n > wmax)
+        n = wmax;
+
+	int i = 0;
+    for (const std::string& e : seq) {
+        ++i;
+        if (i > wmax) {
+            ++yd;
+            i = 1;
+        }
+        DataInternal("", e.c_str(), pt4taskmaker::Center(i, n, w, 2), yd, w);
+    }
+}
 
 void pt4taskmakerX::ResComm(const char* comm)
 {
@@ -129,11 +246,127 @@ void pt4taskmakerX::Res(const char* s, const char* a, int x, int y, int w) {
 	pt4taskmaker::ResultS(s, a, x, y);
 }
 
-//void pt4taskmakerX::Res(const std::vector<bool>& seq);
-//void pt4taskmakerX::Res(const std::vector<int>& seq);
-//void pt4taskmakerX::Res(const std::vector<double>& seq);
-//void pt4taskmakerX::Res(const std::vector<char>& seq);
-//void pt4taskmakerX::Res(const std::vector<const char*>& seq);
+void pt4taskmakerX::Res(const std::vector<bool>& seq) {
+	if (CheckTT())
+		return;
+	int n = seq.size();
+    if (n == 0)
+        return;
+	++yr;
+    int w = 5;
+    int wmax = 80 / (w + 2);
+    if (n > wmax)
+        n = wmax;
+
+	int i = 0;
+    for (auto e : seq) {
+        ++i;
+        if (i > wmax) {
+            ++yr;
+            i = 1;
+        }
+        ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
+    }
+}
+void pt4taskmakerX::Res(const vector<int>& seq) {
+	if (CheckTT()) return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yr;
+	int w = wd;
+	if (w == 0) {
+		auto max_length = max_element(seq.begin(), seq.end(), 
+            [](int a, int b) { return to_string(a).length() < to_string(b).length(); });
+        w = to_string(*max_length).length();
+	}
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yr;
+			i = 1;
+		}
+		ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
+	}
+}
+void pt4taskmakerX::Res(const std::vector<double>& seq) {
+	//TODO vector of doubles
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yr;
+	int w = wd;
+	if (w == 0) {
+		//TODO w := seq.Select(e -> wreal(0, e)(*Format('{0,0:'+fmt+'}', e)*)).Max;
+	}
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+	
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yr;
+			i = 1;
+		}
+		ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
+	}
+}
+void pt4taskmakerX::Res(const std::vector<char>& seq) {
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+	++yr;
+	int w = 3;
+	int wmax = 80 / (w + 2);
+	if (n > wmax)
+		n = wmax;
+	
+	int i = 0;
+	for (auto e : seq) {
+		++i;
+		if (i > wmax) {
+			++yr;
+			i = 1;
+		}
+		ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
+	}
+}
+void pt4taskmakerX::Res(const std::vector<const char*>& seq) { //TODO проверить работоспособность
+	if (CheckTT())
+		return;
+	int n = seq.size();
+	if (n == 0)
+		return;
+	++yr;
+	int max_length = 0;
+    for (const string& s : seq) {
+        max_length = max(max_length, static_cast<int>(s.length()));
+    }
+	int w = max_length + 2;
+	int wmax = 80 / (w + 2);
+    if (n > wmax)
+        n = wmax;
+
+	int i = 0;
+    for (const std::string& e : seq) {
+        ++i;
+        if (i > wmax) {
+            ++yr;
+            i = 1;
+        }
+        ResInternal("", e.c_str(), pt4taskmaker::Center(i, n, w, 2), yr, w);
+    }
+}
 
 void pt4taskmakerX::SetWidth(int n) {
 	if ((n >= 0) && (n <= 20)) {

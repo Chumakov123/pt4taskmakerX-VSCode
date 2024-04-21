@@ -77,11 +77,11 @@ namespace pt4taskmakerX
 	template<typename T1, typename T2, typename T3>
 	void Data(const char* comm1, T1 a1, const char* comm2, T2 a2, const char* comm3, T3 a3);
 
-	//void Data(const std::vector<bool>& seq);
-	//void Data(const std::vector<int>& seq);
-	//void Data(const std::vector<double>& seq);
-	//void Data(const std::vector<char>& seq);
-	//void Data(const std::vector<const char*>& seq);
+	void Data(const std::vector<bool>& seq);
+	void Data(const std::vector<int>& seq);
+	void Data(const std::vector<double>& seq);
+	void Data(const std::vector<char>& seq);
+	void Data(const std::vector<const char*>& seq);
 
 	void ResComm(const char* comm);
 //TODO скрывать от составителя заданий
@@ -104,11 +104,11 @@ namespace pt4taskmakerX
 	template<typename T1, typename T2, typename T3>
 	void Res(const char* comm1, T1 a1, const char* comm2, T2 a2, const char* comm3, T3 a3);
 
-	//void Res(const std::vector<bool>& seq);
-	//void Res(const std::vector<int>& seq);
-	//void Res(const std::vector<double>& seq);
-	//void Res(const std::vector<char>& seq);
-	//void Res(const std::vector<const char*>& seq);
+	void Res(const std::vector<bool>& seq);
+	void Res(const std::vector<int>& seq);
+	void Res(const std::vector<double>& seq);
+	void Res(const std::vector<char>& seq);
+	void Res(const std::vector<const char*>& seq);
 
 	void SetWidth(int n);
 	//void SetPrecision(int n);
@@ -201,11 +201,21 @@ namespace pt4taskmakerX
 		static void Data(const char* comm1, T1 a1, const char* comm2, T2 a2, const char* comm3, T3 a3) {
 			pt4taskmakerX::Data(comm1, a1, comm2, a2, comm3, a3);
 		}
-		//static void Data(const std::vector<bool>& seq);
-		//static void Data(const std::vector<int>& seq);
-		//static void Data(const std::vector<double>& seq);
-		//static void Data(const std::vector<char>& seq);
-		//static void Data(const std::vector<const char*>& seq);
+		static void Data(const std::vector<bool>& seq) {
+			pt4taskmakerX::Data(seq);
+		}
+		static void Data(const std::vector<int>& seq) {
+			pt4taskmakerX::Data(seq);
+		}
+		static void Data(const std::vector<double>& seq) {
+			pt4taskmakerX::Data(seq);
+		}
+		static void Data(const std::vector<char>& seq) {
+			pt4taskmakerX::Data(seq);
+		}
+		static void Data(const std::vector<const char*>& seq) {
+			pt4taskmakerX::Data(seq);
+		}
 
 		static void ResComm(const char* comm) {
 			pt4taskmakerX::ResComm(comm);
@@ -231,11 +241,21 @@ namespace pt4taskmakerX
 			pt4taskmakerX::Res(comm1, a1, comm2, a2, comm3, a3);
 		}
 
-		//static void Res(const std::vector<bool>& seq);
-		//static void Res(const std::vector<int>& seq);
-		//static void Res(const std::vector<double>& seq);
-		//static void Res(const std::vector<char>& seq);
-		//static void Res(const std::vector<const char*>& seq);
+		static void Res(const std::vector<bool>& seq) {
+			pt4taskmakerX::Res(seq);
+		}
+		static void Res(const std::vector<int>& seq) {
+			pt4taskmakerX::Res(seq);
+		}
+		static void Res(const std::vector<double>& seq) {
+			pt4taskmakerX::Res(seq);
+		}
+		static void Res(const std::vector<char>& seq) {
+			pt4taskmakerX::Res(seq);
+		}
+		static void Res(const std::vector<const char*>& seq) {
+			pt4taskmakerX::Res(seq);
+		}
 
 		static void SetWidth(int n) {
 			pt4taskmakerX::SetWidth(n);
