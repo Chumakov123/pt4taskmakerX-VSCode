@@ -121,25 +121,25 @@ namespace pt4taskmakerX
 	double Random(double A, double B);
 	double Random1(double A, double B);
 	double Random2(double A, double B);
-	//const char* RandomName(int len);
+	const char* RandomName(int len);
 
 	void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0);
 	void UseTask(const char* GroupName, int TaskNumber);
 	void UseTask(const char* GroupName, int TaskNumber, const char* TopicDescription);
 
-	//vector<const char*>& GetWords();
-	//vector<const char*>& GetEnWords();
-	//vector<const char*>& GetSentences();
-	//vector<const char*>& GetEnSentences();
-	//vector<const char*>& GetTexts();
-	//vector<const char*>& GetEnTexts();
+	vector<const char*> GetWords();
+	vector<const char*> GetEnWords();
+	vector<const char*> GetSentences();
+	vector<const char*> GetEnSentences();
+	vector<const char*> GetTexts();
+	vector<const char*> GetEnTexts();
 
-	//const char* RandomWord();
-	//const char* RandomEnWord();
-	//const char* RandomSentence();
-	//const char* RandomEnSentence();
-	//const char* RandomText();
-	//const char* RandomEnText();
+	const char* RandomWord();
+	const char* RandomEnWord();
+	const char* RandomSentence();
+	const char* RandomEnSentence();
+	const char* RandomText();
+	const char* RandomEnText();
 
 	//void DataFileInteger(const char* FileName);
 	//void DataFileReal(const char* FileName);
@@ -286,7 +286,9 @@ namespace pt4taskmakerX
 		static double Random2(double A, double B) {
 			return pt4taskmakerX::Random2(A, B);
 		}
-		//static const char* RandomName(int len);
+		static const char* RandomName(int len) {
+			return pt4taskmakerX::RandomName(len);
+		}
 
 		static void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0) {
 			pt4taskmakerX::NewGroup(GroupDescription, GroupAuthor, Options);
@@ -298,19 +300,43 @@ namespace pt4taskmakerX
 			pt4taskmakerX::UseTask(GroupName, TaskNumber, TopicDescription);
 		}
 
-		//static vector<const char*>& GetWords();
-		//static vector<const char*>& GetEnWords();
-		//static vector<const char*>& GetSentences();
-		//static vector<const char*>& GetEnSentences();
-		//static vector<const char*>& GetTexts();
-		//static vector<const char*>& GetEnTexts();
+		static vector<const char*> GetWords() {
+			return pt4taskmakerX::GetWords();
+		}
+		static vector<const char*> GetEnWords() {
+			return pt4taskmakerX::GetEnWords();
+		}
+		static vector<const char*> GetSentences() {
+			return pt4taskmakerX::GetSentences();
+		}
+		static vector<const char*> GetEnSentences() {
+			return pt4taskmakerX::GetEnSentences();
+		}
+		static vector<const char*> GetTexts() {
+			return pt4taskmakerX::GetTexts();
+		}
+		static vector<const char*> GetEnTexts() {
+			return pt4taskmakerX::GetEnTexts();
+		}
 
-		//static const char* RandomWord();
-		//static const char* RandomEnWord();
-		//static const char* RandomSentence();
-		//static const char* RandomEnSentence();
-		//static const char* RandomText();
-		//static const char* RandomEnText();
+		static const char* RandomWord() {
+			return pt4taskmakerX::RandomWord();
+		}
+		static const char* RandomEnWord() {
+			return pt4taskmakerX::RandomEnWord();
+		}
+		static const char* RandomSentence() {
+			return pt4taskmakerX::RandomSentence();
+		}
+		static const char* RandomEnSentence() {
+			return pt4taskmakerX::RandomEnSentence();
+		}
+		static const char* RandomText() {
+			return pt4taskmakerX::RandomText();
+		}
+		static const char* RandomEnText() {
+			return pt4taskmakerX::RandomEnText();
+		}
 
 		//static void DataFileInteger(const char* FileName);
 		//static void DataFileReal(const char* FileName);

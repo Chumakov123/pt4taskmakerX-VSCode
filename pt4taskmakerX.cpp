@@ -12,6 +12,8 @@ bool nt, ut, fd, fr;
 void (*tasks[1000])();
 int TaskCount = 0;
 
+string alphabet_str = alphabet;
+
 void pt4taskmakerX::RegisterTaskFunction(void (*task)()) {
 	tasks[TaskCount++] = task;
 }
@@ -105,13 +107,11 @@ void pt4taskmakerX::Data(const std::vector<bool>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-    if (n == 0)
-        return;
+    if (n == 0) return;
 	++yd;
     int w = 5;
     int wmax = 80 / (w + 2);
-    if (n > wmax)
-        n = wmax;
+    if (n > wmax) n = wmax;
 
 	int i = 0;
     for (auto e : seq) {
@@ -126,8 +126,7 @@ void pt4taskmakerX::Data(const std::vector<bool>& seq) {
 void pt4taskmakerX::Data(const vector<int>& seq) {
 	if (CheckTT()) return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0) return;
 	++yd;
 	int w = wd;
 	if (w == 0) {
@@ -136,8 +135,7 @@ void pt4taskmakerX::Data(const vector<int>& seq) {
         w = to_string(*max_length).length();
 	}
 	int wmax = 80 / (w + 2);
-	if (n > wmax)
-		n = wmax;
+	if (n > wmax) n = wmax;
 
 	int i = 0;
 	for (auto e : seq) {
@@ -154,8 +152,7 @@ void pt4taskmakerX::Data(const std::vector<double>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0)	return;
 	++yd;
 	int w = wd;
 	if (w == 0) {
@@ -179,12 +176,11 @@ void pt4taskmakerX::Data(const std::vector<char>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
+	if (n == 0) return;
 	++yd;
 	int w = 3;
 	int wmax = 80 / (w + 2);
-	if (n > wmax)
-		n = wmax;
+	if (n > wmax) n = wmax;
 	
 	int i = 0;
 	for (auto e : seq) {
@@ -200,8 +196,7 @@ void pt4taskmakerX::Data(const std::vector<const char*>& seq) { //TODO проверить
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0) return;
 	++yd;
 	int max_length = 0;
     for (const string& s : seq) {
@@ -209,8 +204,7 @@ void pt4taskmakerX::Data(const std::vector<const char*>& seq) { //TODO проверить
     }
 	int w = max_length + 2;
 	int wmax = 80 / (w + 2);
-    if (n > wmax)
-        n = wmax;
+    if (n > wmax) n = wmax;
 
 	int i = 0;
     for (const std::string& e : seq) {
@@ -250,13 +244,11 @@ void pt4taskmakerX::Res(const std::vector<bool>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-    if (n == 0)
-        return;
+    if (n == 0) return;
 	++yr;
     int w = 5;
     int wmax = 80 / (w + 2);
-    if (n > wmax)
-        n = wmax;
+    if (n > wmax) n = wmax;
 
 	int i = 0;
     for (auto e : seq) {
@@ -271,8 +263,7 @@ void pt4taskmakerX::Res(const std::vector<bool>& seq) {
 void pt4taskmakerX::Res(const vector<int>& seq) {
 	if (CheckTT()) return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0) return;
 	++yr;
 	int w = wd;
 	if (w == 0) {
@@ -281,8 +272,7 @@ void pt4taskmakerX::Res(const vector<int>& seq) {
         w = to_string(*max_length).length();
 	}
 	int wmax = 80 / (w + 2);
-	if (n > wmax)
-		n = wmax;
+	if (n > wmax) n = wmax;
 
 	int i = 0;
 	for (auto e : seq) {
@@ -299,16 +289,14 @@ void pt4taskmakerX::Res(const std::vector<double>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0) return;
 	++yr;
 	int w = wd;
 	if (w == 0) {
 		//TODO w := seq.Select(e -> wreal(0, e)(*Format('{0,0:'+fmt+'}', e)*)).Max;
 	}
 	int wmax = 80 / (w + 2);
-	if (n > wmax)
-		n = wmax;
+	if (n > wmax) n = wmax;
 	
 	int i = 0;
 	for (auto e : seq) {
@@ -324,12 +312,11 @@ void pt4taskmakerX::Res(const std::vector<char>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
+	if (n == 0) return;
 	++yr;
 	int w = 3;
 	int wmax = 80 / (w + 2);
-	if (n > wmax)
-		n = wmax;
+	if (n > wmax) n = wmax;
 	
 	int i = 0;
 	for (auto e : seq) {
@@ -345,8 +332,7 @@ void pt4taskmakerX::Res(const std::vector<const char*>& seq) { //TODO проверить 
 	if (CheckTT())
 		return;
 	int n = seq.size();
-	if (n == 0)
-		return;
+	if (n == 0) return;
 	++yr;
 	int max_length = 0;
     for (const string& s : seq) {
@@ -354,8 +340,7 @@ void pt4taskmakerX::Res(const std::vector<const char*>& seq) { //TODO проверить 
     }
 	int w = max_length + 2;
 	int wmax = 80 / (w + 2);
-    if (n > wmax)
-        n = wmax;
+    if (n > wmax) n = wmax;
 
 	int i = 0;
     for (const std::string& e : seq) {
@@ -402,7 +387,19 @@ double pt4taskmakerX::Random1(double A, double B) {
 double pt4taskmakerX::Random2(double A, double B) {
 	return Random(round(A*100), round(B*100))/100 + Random() * 1.0e-7;
 }
-//const char* pt4taskmakerX::RandomName(int len);
+const char* pt4taskmakerX::RandomName(int len) { //TODO проверить
+    string result;
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dis(1, alphabet_str.length());
+
+    for (int i = 0; i < len; ++i) {
+        result += alphabet[dis(gen)];
+    }
+
+    return result.c_str();
+}
 
 void pt4taskmakerX::GetGroupName(const char* FilePath) {
 
@@ -504,19 +501,72 @@ void pt4taskmakerX::UseTask(const char* GroupName, int TaskNumber, const char* T
 	ut = true;
 }
 
-//vector<const char*>& pt4taskmakerX::GetWords();
-//vector<const char*>& pt4taskmakerX::GetEnWords();
-//vector<const char*>& pt4taskmakerX::GetSentences();
-//vector<const char*>& pt4taskmakerX::GetEnSentences();
-//vector<const char*>& pt4taskmakerX::GetTexts();
-//vector<const char*>& pt4taskmakerX::GetEnTexts();
-
-//const char* pt4taskmakerX::RandomWord();
-//const char* pt4taskmakerX::RandomEnWord();
-//const char* pt4taskmakerX::RandomSentence();
-//const char* pt4taskmakerX::RandomEnSentence();
-//const char* pt4taskmakerX::RandomText();
-//const char* pt4taskmakerX::RandomEnText();
+vector<const char*> pt4taskmakerX::GetWords() {
+	vector<const char*> result;
+	int n = pt4taskmaker::WordCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::WordSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomWord() {
+	return pt4taskmaker::WordSample(pt4taskmaker::RandomN(0, pt4taskmaker::WordCount() -1));
+}
+vector<const char*> pt4taskmakerX::GetEnWords() {
+	vector<const char*> result;
+	int n = pt4taskmaker::EnWordCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::EnWordSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomEnWord() {
+	return pt4taskmaker::EnWordSample(pt4taskmaker::RandomN(0, pt4taskmaker::EnWordCount() -1));
+}
+vector<const char*> pt4taskmakerX::GetSentences() {
+	vector<const char*> result;
+	int n = pt4taskmaker::SentenceCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::SentenceSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomSentence() {
+	return pt4taskmaker::SentenceSample(pt4taskmaker::RandomN(0, pt4taskmaker::SentenceCount() -1));
+}
+vector<const char*> pt4taskmakerX::GetEnSentences() {
+	vector<const char*> result;
+	int n = pt4taskmaker::EnSentenceCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::EnSentenceSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomEnSentence() {
+	return pt4taskmaker::EnSentenceSample(pt4taskmaker::RandomN(0, pt4taskmaker::EnSentenceCount() -1));
+}
+vector<const char*> pt4taskmakerX::GetTexts() {
+	vector<const char*> result;
+	int n = pt4taskmaker::TextCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::TextSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomText() {
+	return pt4taskmaker::TextSample(pt4taskmaker::RandomN(0, pt4taskmaker::TextCount() -1));
+}
+vector<const char*> pt4taskmakerX::GetEnTexts() {
+	vector<const char*> result;
+	int n = pt4taskmaker::EnTextCount();
+	for ( int i = 0; i < n; ++i) {
+		result.push_back(pt4taskmaker::EnTextSample(i));
+	}
+	return result;
+}
+const char* pt4taskmakerX::RandomEnText() {
+	return pt4taskmaker::EnTextSample(pt4taskmaker::RandomN(0, pt4taskmaker::EnTextCount() -1));
+}
 
 //void pt4taskmakerX::DataFileInteger(const char* FileName);
 //void pt4taskmakerX::DataFileReal(const char* FileName);
