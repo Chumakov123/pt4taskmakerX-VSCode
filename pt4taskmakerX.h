@@ -141,17 +141,17 @@ namespace pt4taskmakerX
 	const char* RandomText();
 	const char* RandomEnText();
 
-	//void DataFileInteger(const char* FileName);
-	//void DataFileReal(const char* FileName);
-	//void DataFileChar(const char* FileName);
-	//void DataFileString(const char* FileName);
-	//void DataText(const char* FileName);
+	void DataFileInteger(const char* FileName);
+	void DataFileReal(const char* FileName);
+	void DataFileChar(const char* FileName);
+	void DataFileString(const char* FileName);
+	void DataText(const char* FileName, int LineCount);
 
-	//void ResFileInteger(const char* FileName);
-	//void ResFileReal(const char* FileName);
-	//void ResFileChar(const char* FileName);
-	//void ResFileString(const char* FileName);
-	//void ResText(const char* FileName);
+	void ResFileInteger(const char* FileName);
+	void ResFileReal(const char* FileName);
+	void ResFileChar(const char* FileName);
+	void ResFileString(const char* FileName);
+	void ResText(const char* FileName, int LineCount);
 
 	class pt {
 	public:
@@ -338,17 +338,37 @@ namespace pt4taskmakerX
 			return pt4taskmakerX::RandomEnText();
 		}
 
-		//static void DataFileInteger(const char* FileName);
-		//static void DataFileReal(const char* FileName);
-		//static void DataFileChar(const char* FileName);
-		//static void DataFileString(const char* FileName);
-		//static void DataText(const char* FileName);
+		static void DataFileInteger(const char* FileName) {
+			pt4taskmakerX::DataFileInteger(FileName);
+		}
+		static void DataFileReal(const char* FileName) {
+			pt4taskmakerX::DataFileReal(FileName);
+		}
+		static void DataFileChar(const char* FileName) {
+			pt4taskmakerX::DataFileChar(FileName);
+		}
+		static void DataFileString(const char* FileName) {
+			pt4taskmakerX::DataFileString(FileName);
+		}
+		static void DataText(const char* FileName, int LineCount) {
+			pt4taskmakerX::DataText(FileName, LineCount);
+		}
 
-		//static void ResFileInteger(const char* FileName);
-		//static void ResFileReal(const char* FileName);
-		//static void ResFileChar(const char* FileName);
-		//static void ResFileString(const char* FileName);
-		//static void ResText(const char* FileName);
+		static void ResFileInteger(const char* FileName) {
+			pt4taskmakerX::ResFileInteger(FileName);
+		}
+		static void ResFileReal(const char* FileName) {
+			pt4taskmakerX::ResFileReal(FileName);
+		}
+		static void ResFileChar(const char* FileName) {
+			pt4taskmakerX::ResFileChar(FileName);
+		}
+		static void ResFileString(const char* FileName) {
+			pt4taskmakerX::ResFileString(FileName);
+		}
+		static void ResText(const char* FileName, int LineCount) {
+			pt4taskmakerX::ResText(FileName, LineCount);
+		}
 	};
 }
 #include "pt4taskmakerX.tpp"

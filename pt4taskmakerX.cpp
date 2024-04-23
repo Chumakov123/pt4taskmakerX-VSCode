@@ -2,8 +2,11 @@
 #include <random>
 #include <ctime>
 #include <algorithm>
+#include <fstream>
+#include <iomanip>
 #include "pt4taskmakerX.h"
 
+using ShortString = char[256];
 char GroupName[100];
 
 string fmt;
@@ -27,7 +30,7 @@ string ErrorMessage(const string& s) {
 }
 
 void ErrorInfo(const string& s) {
-	pt4taskmaker::TaskText(("\B" + ErrorMessage(s) + "\b").c_str(), 0, ye);
+	pt4taskmaker::TaskText(("\\B" + ErrorMessage(s) + "\b").c_str(), 0, ye);
 	ye = ye + 1;
 	if (ye > 5) {
 		ye = 0;
@@ -44,8 +47,17 @@ bool CheckTT() {
 }
 
 int wreal(int w, double x) {
-	//TODO Ширина вещественного числа
-	return 0;
+	//TODO wreal
+	int result = w;
+	if (w == 0) {
+		ostringstream oss;
+        oss << std::fixed << std::setprecision(pr) << x;
+        result = oss.str().length();
+        if (pr <= 0 && x >= 0) {
+            result += 1;
+        }
+	}
+	return result;
 }
 
 int winteger(int w, int x) {
@@ -568,14 +580,198 @@ const char* pt4taskmakerX::RandomEnText() {
 	return pt4taskmaker::EnTextSample(pt4taskmaker::RandomN(0, pt4taskmaker::EnTextCount() -1));
 }
 
-//void pt4taskmakerX::DataFileInteger(const char* FileName);
-//void pt4taskmakerX::DataFileReal(const char* FileName);
-//void pt4taskmakerX::DataFileChar(const char* FileName);
-//void pt4taskmakerX::DataFileString(const char* FileName);
-//void pt4taskmakerX::DataText(const char* FileName);
+void pt4taskmakerX::DataFileInteger(const char* FileName) {
+	if (CheckTT()) return;
+	++yd;
+	if (yd > 5) {
+		DataComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	size_t w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		int a;
+        while (file.read(reinterpret_cast<char*>(&a), sizeof(int))) {
+            string s = to_string(a);
+            if (s.length() > w)
+                w = s.length();
+        }
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        DataComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fd = true;
+	pt4taskmaker::DataFileN(FileName, yd, w + 2);
+}
+void pt4taskmakerX::DataFileReal(const char* FileName) {
+	if (CheckTT()) return;
+	++yd;
+	if (yd > 5) {
+		DataComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	int w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		double a;
+		while (file.read(reinterpret_cast<char*>(&a), sizeof(double))) {
+			int s = wreal(0, a);
+			if (s > w) {
+				w = s;
+			}
+		}
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        DataComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fd = true;
+	pt4taskmaker::DataFileR(FileName, yd, w + 2);
+}
+void pt4taskmakerX::DataFileChar(const char* FileName) {
+	if (CheckTT()) return;
+	++yd;
+	if (yd > 5) {
+		DataComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	fd = true;
+	pt4taskmaker::DataFileC(FileName, yd, 5);
+}
+void pt4taskmakerX::DataFileString(const char* FileName) {
+	if (CheckTT()) return;
+	++yd;
+	if (yd > 5) {
+		DataComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	size_t w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		ShortString a;
+        while (file.read(reinterpret_cast<char*>(&a), sizeof(ShortString))) {
+            if (strlen(a) > w)
+                w = strlen(a);
+        }
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        DataComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fd = true;
+    pt4taskmaker::DataFileS(FileName, yd, w + 4);
+}
+void pt4taskmakerX::DataText(const char* FileName, int LineCount) {
+	if (CheckTT()) return;
+	++yd;
+	if (yd > 5) {
+		DataComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	fd = true;
+	int yd2 = yd + LineCount - 1;
+	if (yd2 > 5) {
+		yd2 = 5;
+	}
+	pt4taskmaker::DataFileT(FileName, yd, yd2);
+	yd = yd2;
+}
 
-//void pt4taskmakerX::ResFileInteger(const char* FileName);
-//void pt4taskmakerX::ResFileReal(const char* FileName);
-//void pt4taskmakerX::ResFileChar(const char* FileName);
-//void pt4taskmakerX::ResFileString(const char* FileName);
-//void pt4taskmakerX::ResText(const char* FileName);
+void pt4taskmakerX::ResFileInteger(const char* FileName) {
+	if (CheckTT()) return;
+	++yr;
+	if (yr > 5) {
+		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	size_t w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		int a;
+        while (file.read(reinterpret_cast<char*>(&a), sizeof(int))) {
+            string s = to_string(a);
+            if (s.length() > w)
+                w = s.length();
+        }
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        ResComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fr = true;
+	pt4taskmaker::ResultFileN(FileName, yr, w + 2);
+}
+void pt4taskmakerX::ResFileReal(const char* FileName) {
+	if (CheckTT()) return;
+	++yr;
+	if (yr > 5) {
+		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	int w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		double a;
+		while (file.read(reinterpret_cast<char*>(&a), sizeof(double))) {
+			int s = wreal(0, a);
+			if (s > w) {
+				w = s;
+			}
+		}
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        ResComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fr = true;
+	pt4taskmaker::ResultFileR(FileName, yr, w + 2);
+}
+void pt4taskmakerX::ResFileChar(const char* FileName) {
+	if (CheckTT()) return;
+	++yr;
+	if (yr > 5) {
+		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	fr = true;
+	pt4taskmaker::ResultFileC(FileName, yr, 5);
+}
+void pt4taskmakerX::ResFileString(const char* FileName) {
+	if (CheckTT()) return;
+	++yr;
+	if (yr > 5) {
+		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	size_t w = 0;
+	try {
+		ifstream file(FileName, ios::binary);
+		ShortString a;
+        while (file.read(reinterpret_cast<char*>(&a), sizeof(ShortString))) {
+            if (strlen(a) > w)
+                w = strlen(a);
+        }
+	} catch (const std::exception& ex) {
+		string fname(FileName);
+        ResComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
+        return;
+	}
+	fr = true;
+    pt4taskmaker::ResultFileS(FileName, yr, w + 4);
+}
+void pt4taskmakerX::ResText(const char* FileName, int LineCount) {
+	if (CheckTT()) return;
+	++yr;
+	if (yr > 5) {
+		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
+		return;
+	}
+	fr = true;
+	int yr2 = yr + LineCount - 1;
+	if (yr2 > 5) {
+		yr2 = 5;
+	}
+	pt4taskmaker::ResultFileT(FileName, yr, yr2);
+	yr = yr2;
+}
