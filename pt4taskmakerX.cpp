@@ -11,13 +11,20 @@ char GroupName[100];
 string fmt;
 int yd, yr, ye, nd, nr, pr, wd;
 bool nt, ut, fd, fr;
+
 void (*tasks[1000])();
+char taskNames[1000][100];
+int taskNameLen[1000];
+
 int TaskCount = 0;
 
 const string alphabet_str = alphabet;
 
-void pt4taskmakerX::RegisterTaskFunction(void (*task)()) {
-	tasks[TaskCount++] = task;
+void pt4taskmakerX::RegisterTaskFunction(void (*task)(), const char* taskname) {
+	tasks[TaskCount] = task;
+	strcpy(taskNames[TaskCount], taskname);
+	taskNameLen[TaskCount] = strlen(taskname); 
+	++TaskCount;
 }
 
 void Show(const string& s) {
@@ -210,7 +217,7 @@ void pt4taskmakerX::Data(const std::vector<char>& seq) {
 		DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
 	}
 }
-void pt4taskmakerX::Data(const std::vector<const char*>& seq) { //TODO проверить работоспособность
+void pt4taskmakerX::Data(const std::vector<const char*>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
@@ -347,7 +354,7 @@ void pt4taskmakerX::Res(const std::vector<char>& seq) {
 		ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
 	}
 }
-void pt4taskmakerX::Res(const std::vector<const char*>& seq) { //TODO проверить работоспособность
+void pt4taskmakerX::Res(const std::vector<const char*>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
@@ -421,7 +428,7 @@ double pt4taskmakerX::Random1(double A, double B) {
 double pt4taskmakerX::Random2(double A, double B) {
 	return Random(round(A*100), round(B*100))/100 + Random() * 1.0e-7;
 }
-string pt4taskmakerX::RandomName(int len) { //TODO проверить
+string pt4taskmakerX::RandomName(int len) {
     string result;
 
     random_device rd;
@@ -430,7 +437,6 @@ string pt4taskmakerX::RandomName(int len) { //TODO проверить
 
     for (int i = 0; i < len; ++i) {
 		result.push_back(alphabet_str[dis(gen)]);
-
     }
 
     return result;
@@ -501,6 +507,25 @@ void __stdcall RunTask(int num) {
     }
 }
 
+unsigned int HashString(const char* str, size_t length) {
+    unsigned int hash = 5381;
+    for (size_t i = 0; i < length; ++i) {
+        hash = ((hash << 5) + hash) + str[i];
+    }
+    return hash;
+}
+
+string GenerateGroupKey() {
+    unsigned int sum = 0;
+    for (int i = 0; i < TaskCount; ++i) {
+        sum += HashString(taskNames[i], taskNameLen[i]);
+    }
+	sum += HashString(GroupName, strlen(GroupName));
+	string res = "GK";
+	res += to_string(sum);
+    return res;
+}
+
 void pt4taskmakerX::NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options)
 {
 	srand((unsigned)time(NULL));
@@ -516,7 +541,7 @@ void pt4taskmakerX::NewGroup(const char* GroupDescription, const char* GroupAuth
 		Show("Группа" + name + " содержит более 999 заданий.");
 		return;
 	}
-	string GroupKey = "GK123"; //TODO доделать создание ключа группы
+	string GroupKey = GenerateGroupKey();
 	if ((Options & OptionUseAddition) == OptionUseAddition)
 		GroupKey += "#UseAddition#";
 	if ((Options & OptionHideExamples) == OptionHideExamples)
@@ -700,7 +725,6 @@ void pt4taskmakerX::DataText(const char* FileName, int LineCount) {
 	pt4taskmaker::DataFileT(FileName, yd, yd2);
 	yd = yd2;
 }
-//TODO сверить ResFile
 void pt4taskmakerX::ResFileInteger(const char* FileName) {
 	if (CheckTT()) return;
 	++yr;

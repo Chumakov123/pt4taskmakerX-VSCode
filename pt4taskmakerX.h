@@ -11,7 +11,7 @@ using ShortString = char[256];
 #define DefineTask(name) \
     void name(); \
     struct name ## _Registrar { \
-        name ## _Registrar() { RegisterTaskFunction(name); } \
+        name ## _Registrar() { RegisterTaskFunction(name, #name); } \
     } name ## _registrar_instance; \
     void name()
 
@@ -30,7 +30,8 @@ using ShortString = char[256];
 #define ErrMes6 "Error: При определении задания не указаны исходные данные."
 #define ErrMes7 "Error: При определении задания не указаны результирующие данные."
 
-//TODO скрывать от составителя заданий
+//Функции и переменные для внутреннего использования
+
 extern int yd, yr, ye, nd, nr, pr, wd;
 extern bool nt, ut, fd, fr;
 
@@ -42,7 +43,8 @@ void ResInternal(const char* s, T a, int x, int y, int w);
 void ErrorInfo(const string& s);
 int winteger(int w, int x);
 int wreal(int w, double x);
-//***********************
+
+//*********************************************
 
 namespace pt4taskmakerX
 {
@@ -53,7 +55,7 @@ namespace pt4taskmakerX
 	const int OptionHideExamples = 16;      // не отображать раздел с примером верного решения
 
 	/// Добавление задания (как указатель на функцию) в список заданий. Для внутреннего использования.
-	void RegisterTaskFunction(void (*task)());
+	void RegisterTaskFunction(void (*task)(), const char* taskname);
 
 	/// Получение названия группы заданий из названия файла. Для внутреннего использования.
 	void GetGroupName(const char* FilePath);
@@ -71,13 +73,11 @@ namespace pt4taskmakerX
 	/// формулировки должны разделяться символом \\n
 	void NewTask(const char* tasktext);
 
-//TODO скрывать от составителя заданий
 	void Data(const char* s, bool a, int x, int y, int w);
     void Data(const char* s, int a, int x, int y, int w);
     void Data(const char* s, double a, int x, int y, int w);
     void Data(const char* s, char a, int x, int y, int w);
     void Data(const char* s, const char* a, int x, int y, int w);
-//***********************
 
 	/// Добавляет комментарий в новой строке раздела исходных даннных.
 	void DataComm(const char* comm);
@@ -117,13 +117,11 @@ namespace pt4taskmakerX
 	/// Добавляет последовательность строк в раздел исходных данных.
 	void Data(const std::vector<const char*>& seq);
 
-//TODO скрывать от составителя заданий
 	void Res(const char* s, bool a, int x, int y, int w);
     void Res(const char* s, int a, int x, int y, int w);
     void Res(const char* s, double a, int x, int y, int w);
     void Res(const char* s, char a, int x, int y, int w);
     void Res(const char* s, const char* a, int x, int y, int w);
-//***********************
 
 	/// Добавляет комментарий в новой строке раздела результатов.
 	void ResComm(const char* comm);
@@ -708,7 +706,7 @@ namespace pt4taskmakerX
 		/// в разделе исходных данных. Длина каждой строки
 		/// текстового файла не должна превосходить 70 символов.
 		/// Текст должен храниться в файле в однобайтной кодировке.
-		static void DataText(const char* FileName, int LineCount = 4) {
+		static void DataText(const char* FileName, int LineCount = 5) {
 			pt4taskmakerX::DataText(FileName, LineCount);
 		}
 
@@ -740,7 +738,7 @@ namespace pt4taskmakerX
 		/// с именем FileName и отображает его содержимое в разделе результатов. 
 		/// Длина каждой строки текстового файла не должна превосходить 70 символов.
 		/// Текст должен храниться в файле в однобайтной кодировке.
-		static void ResText(const char* FileName, int LineCount = 4) {
+		static void ResText(const char* FileName, int LineCount = 5) {
 			pt4taskmakerX::ResText(FileName, LineCount);
 		}
 		
