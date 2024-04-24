@@ -1,4 +1,5 @@
 #pragma once
+#include"pt4taskmakerX.h"
 
 template<typename T>
 inline void pt4taskmakerX::Data(const char* comm, T a) {

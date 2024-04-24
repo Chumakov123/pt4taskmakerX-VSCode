@@ -30,9 +30,10 @@ DefineTask(Task3) {
 	int a = pt::Random(1, 99);
 	int b = pt::Random(1, 99);
 	auto w = pt::RandomText();
-	vector<int> v;
+	pt::SetPrecision(0);
+	vector<double> v;
 	for (int i = 0; i < 30; ++i) {
-		v.push_back(pt::Random(1, 20));
+		v.push_back(pt::Random(1.0, 20.0));
 	}
 	const char* s = "Привет";
 	pt::Data("",w);

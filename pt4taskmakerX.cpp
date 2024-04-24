@@ -6,7 +6,6 @@
 #include <iomanip>
 #include "pt4taskmakerX.h"
 
-using ShortString = char[256];
 char GroupName[100];
 
 string fmt;
@@ -15,7 +14,7 @@ bool nt, ut, fd, fr;
 void (*tasks[1000])();
 int TaskCount = 0;
 
-string alphabet_str = alphabet;
+const string alphabet_str = alphabet;
 
 void pt4taskmakerX::RegisterTaskFunction(void (*task)()) {
 	tasks[TaskCount++] = task;
@@ -47,15 +46,20 @@ bool CheckTT() {
 }
 
 int wreal(int w, double x) {
-	//TODO wreal
 	int result = w;
 	if (w == 0) {
 		ostringstream oss;
-        oss << std::fixed << std::setprecision(pr) << x;
-        result = oss.str().length();
-        if (pr <= 0 && x >= 0) {
-            result += 1;
+        if (fmt[0] == 'f') {
+            int precision = std::stoi(fmt.substr(1));
+            oss << std::fixed << std::setprecision(precision) << x;
+        } else if (fmt[0] == 'e') {
+            int exponent = std::stoi(fmt.substr(1));
+            oss << std::scientific << std::setprecision(exponent - 1) << x;
         }
+        result = oss.str().length();
+        // if (pr <= 0 && x >= 0) {
+        //     result += 1;
+        // }
 	}
 	return result;
 }
@@ -85,7 +89,7 @@ void pt4taskmakerX::NewTask(const char* topic, const char* tasktext) {
 	fd = false; // наличие файловых данных в разделе исходных данных
 	fr = false; // наличие файловых данных в разделе результатов
 	pr = 2;     // текущая точность вывода вещественных данных
-	fmt = "f2"; // текущий формат вывода вещественных данных //Возможно "%.2f"
+	fmt = "f2"; // текущий формат вывода вещественных данных
 	wd = 0;     // текущая ширина поля вывода для чисел
 }
 void pt4taskmakerX::NewTask(const char* tasktext) {
@@ -160,7 +164,6 @@ void pt4taskmakerX::Data(const vector<int>& seq) {
 	}
 }
 void pt4taskmakerX::Data(const std::vector<double>& seq) {
-	//TODO vector of doubles
 	if (CheckTT())
 		return;
 	int n = seq.size();
@@ -168,7 +171,10 @@ void pt4taskmakerX::Data(const std::vector<double>& seq) {
 	++yd;
 	int w = wd;
 	if (w == 0) {
-		//TODO w := seq.Select(e -> wreal(0, e)(*Format('{0,0:'+fmt+'}', e)*)).Max;
+		for (double e : seq) {
+			int currentW = wreal(0, e);
+			w = max(w, currentW);
+		}
 	}
 	int wmax = 80 / (w + 2);
 	if (n > wmax)
@@ -297,15 +303,16 @@ void pt4taskmakerX::Res(const vector<int>& seq) {
 	}
 }
 void pt4taskmakerX::Res(const std::vector<double>& seq) {
-	//TODO vector of doubles
-	if (CheckTT())
-		return;
+	if (CheckTT()) return;
 	int n = seq.size();
 	if (n == 0) return;
 	++yr;
 	int w = wd;
 	if (w == 0) {
-		//TODO w := seq.Select(e -> wreal(0, e)(*Format('{0,0:'+fmt+'}', e)*)).Max;
+		for (double e : seq) {
+			int currentW = wreal(0, e);
+			w = max(w, currentW);
+		}
 	}
 	int wmax = 80 / (w + 2);
 	if (n > wmax) n = wmax;
@@ -370,7 +377,22 @@ void pt4taskmakerX::SetWidth(int n) {
 		wd = n;
 	}
 }
-//void pt4taskmakerX::SetPrecision(int n);
+void pt4taskmakerX::SetPrecision(int n) {
+	if (CheckTT()) return;
+	if (abs(n) > 10) return;
+	pr = n;
+	if (n < 0) {
+		fmt = "e" + to_string(-n);
+		n = 0;
+	}
+	else if (n == 0) {
+		fmt = "e6";
+	}
+	else {
+		fmt = 'f' + to_string(n);
+	}
+	pt4taskmaker::SetPrecision(n);
+}
 void pt4taskmakerX::SetTestCount(int n) {
 	if (CheckTT()) return;
 	pt4taskmaker::SetTestCount(n);
@@ -399,18 +421,19 @@ double pt4taskmakerX::Random1(double A, double B) {
 double pt4taskmakerX::Random2(double A, double B) {
 	return Random(round(A*100), round(B*100))/100 + Random() * 1.0e-7;
 }
-const char* pt4taskmakerX::RandomName(int len) { //TODO проверить
+string pt4taskmakerX::RandomName(int len) { //TODO проверить
     string result;
 
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<int> dis(1, alphabet_str.length());
+    uniform_int_distribution<int> dis(0, alphabet_str.length()-1);
 
     for (int i = 0; i < len; ++i) {
-        result += alphabet[dis(gen)];
+		result.push_back(alphabet_str[dis(gen)]);
+
     }
 
-    return result.c_str();
+    return result;
 }
 
 void pt4taskmakerX::GetGroupName(const char* FilePath) {
@@ -677,7 +700,7 @@ void pt4taskmakerX::DataText(const char* FileName, int LineCount) {
 	pt4taskmaker::DataFileT(FileName, yd, yd2);
 	yd = yd2;
 }
-
+//TODO сверить ResFile
 void pt4taskmakerX::ResFileInteger(const char* FileName) {
 	if (CheckTT()) return;
 	++yr;
@@ -704,6 +727,7 @@ void pt4taskmakerX::ResFileInteger(const char* FileName) {
 }
 void pt4taskmakerX::ResFileReal(const char* FileName) {
 	if (CheckTT()) return;
+	ResComm(fmt.c_str());
 	++yr;
 	if (yr > 5) {
 		ResComm(("\\B"+ErrorMessage(ErrMes1)+"\b").c_str());
@@ -774,4 +798,11 @@ void pt4taskmakerX::ResText(const char* FileName, int LineCount) {
 	}
 	pt4taskmaker::ResultFileT(FileName, yr, yr2);
 	yr = yr2;
+}
+
+void pt4taskmakerX::ConvertToShortString(string s, ShortString buf)
+{
+	buf[0] = (char)s.length();
+	for (size_t i = 1; i <= s.length(); i++)
+		buf[i] = s[i-1];
 }

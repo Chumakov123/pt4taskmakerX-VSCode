@@ -3,8 +3,9 @@
 
 #include <vector>
 #include <string>
-
 #include "pt4taskmaker.h"
+
+using ShortString = char[256];
 
 // макрос дл€ добавлени€ задани€ в список всех заданий группы
 #define DefineTask(name) \
@@ -20,7 +21,7 @@
         _GroupName() { GetGroupName(__FILE__); } \
     } _groupname_instance;
 
-#define alphabet "0123456789abcdefghijklmnopqrstuvwxyz"
+#define alphabet "0123456789abcdefghijklmnoprstuvwxyz"
 #define ErrMes1 "Error: –аздел размером более 5 строк не может содержать файловые данные."
 #define ErrMes2 "Error: ѕри наличии файловых данных раздел не может содержать более 5 строк."
 #define ErrMes3 "Error:  оличество исходных данных превысило 200."
@@ -111,7 +112,7 @@ namespace pt4taskmakerX
 	void Res(const std::vector<const char*>& seq);
 
 	void SetWidth(int n);
-	//void SetPrecision(int n);
+	void SetPrecision(int n);
 	void SetTestCount(int n);
 	void SetRequiredDataCount(int n);
 
@@ -121,7 +122,7 @@ namespace pt4taskmakerX
 	double Random(double A, double B);
 	double Random1(double A, double B);
 	double Random2(double A, double B);
-	const char* RandomName(int len);
+	string RandomName(int len);
 
 	void NewGroup(const char* GroupDescription, const char* GroupAuthor, int Options = 0);
 	void UseTask(const char* GroupName, int TaskNumber);
@@ -152,6 +153,8 @@ namespace pt4taskmakerX
 	void ResFileChar(const char* FileName);
 	void ResFileString(const char* FileName);
 	void ResText(const char* FileName, int LineCount);
+
+	void ConvertToShortString(string s, ShortString buf);
 
 	class pt {
 	public:
@@ -260,7 +263,9 @@ namespace pt4taskmakerX
 		static void SetWidth(int n) {
 			pt4taskmakerX::SetWidth(n);
 		}
-		//static void SetPrecision(int n);
+		static void SetPrecision(int n) {
+			pt4taskmakerX::SetPrecision(n);
+		}
 		static void SetTestCount(int n) {
 			pt4taskmakerX::SetTestCount(n);
 		}
@@ -286,7 +291,7 @@ namespace pt4taskmakerX
 		static double Random2(double A, double B) {
 			return pt4taskmakerX::Random2(A, B);
 		}
-		static const char* RandomName(int len) {
+		static string RandomName(int len) {
 			return pt4taskmakerX::RandomName(len);
 		}
 
@@ -368,6 +373,10 @@ namespace pt4taskmakerX
 		}
 		static void ResText(const char* FileName, int LineCount) {
 			pt4taskmakerX::ResText(FileName, LineCount);
+		}
+		
+		static void ConvertToShortString(string s, ShortString buf) {
+			pt4taskmakerX::ConvertToShortString(s, buf);
 		}
 	};
 }
