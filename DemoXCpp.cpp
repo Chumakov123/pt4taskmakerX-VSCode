@@ -99,16 +99,12 @@ DefineTask(Task6) {
         }
         fs2.write(buf, 256);
         fc3.write((char*) &c, 1);
-        // char ch = (s.length() >= k) ? s[k - 1] : ' ';
-        // fc3.write(&ch, sizeof(char));
-        // fs2 << s.substr(0, k) << endl; 
     }
     fs1.close();
     fs2.close();
     fc3.close();
     pt::Data("K = ", k);
     pt::Data("Имя исходного файла: ", s1.c_str(), "Содержимое исходного файла:");
-    //pt4taskmaker::DataFileS(s1.c_str(), 3, jmax + 3);
     pt::DataFileString(s1.c_str());
     pt::Data("Имя результирующего строкового файла:  ", s2.c_str());
     pt::Data("Имя результирующего символьного файла: ", s3.c_str());
@@ -116,4 +112,30 @@ DefineTask(Task6) {
     pt::ResFileString(s2.c_str());
     pt::ResComm("Содержимое результирующего символьного файла:");
     pt::ResFileChar(s3.c_str());
+}
+
+DefineTask(Task7) {
+    pt::NewTask("Текстовые файлы: основные операции",
+        R"(Дан текстовый файл.
+        Удалить из него все пустые строки.)");
+    string s1 = pt::RandomName(6) + ".tst",
+           s2 = pt::RandomName(6) + ".tst",
+           s = pt::RandomText();
+    ofstream t2(s2.c_str()), t1(s1.c_str());
+    t2 << s << endl;
+    t2.close();
+    char* s0 = "\r\n\r\n";
+    size_t p = s.find(s0);
+    while (p != string::npos)
+    {
+        s.erase(p, 2);
+        p = s.find(s0);
+    }
+    t1 << s << endl;
+    t1.close();
+    pt::ResText(s1.c_str());
+    rename(s2.c_str(), s1.c_str());
+    pt::Data("Имя файла", s1.c_str());
+    pt::DataText(s1.c_str());
+    pt::SetTestCount(3);
 }

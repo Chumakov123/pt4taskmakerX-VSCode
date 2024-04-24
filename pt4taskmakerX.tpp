@@ -40,7 +40,7 @@ inline void pt4taskmakerX::Data(const char* comm1, T1 a1, const char* comm2, T2 
 
 template<typename T>
 inline void DataInternal(const char* s, T a, int x, int y, int w) {
-    if ((y > 0) && fd) {
+    if ((y > 5) && fd) {
         ErrorInfo(ErrMes2);
         return;
     }
@@ -92,7 +92,7 @@ inline void pt4taskmakerX::Res(const char* comm1, T1 a1, const char* comm2, T2 a
 
 template<typename T>
 inline void ResInternal(const char* s, T a, int x, int y, int w) {
-	if ((y > 0) && fr) {
+	if ((y > 5) && fr) {
 		ErrorInfo(ErrMes2);
 		return;
 	}
