@@ -12,17 +12,23 @@ int yd, yr, ye, nd, nr, pr, wd;
 bool nt, ut, fd, fr;
 
 void (*tasks[1000])();
-char taskNames[1000][100];
-int taskNameLen[1000];
+unsigned int taskGroupHash;
 
 int TaskCount = 0;
 
 const string alphabet_str = alphabet;
 
+unsigned int HashString(const char* str, size_t length) {
+    unsigned int hash = 5381;
+    for (size_t i = 0; i < length; ++i) {
+        hash = ((hash << 5) + hash) + str[i];
+    }
+    return hash;
+}
+
 void pt4taskmakerX::RegisterTaskFunction(void (*task)(), const char* taskname) {
 	tasks[TaskCount] = task;
-	strcpy(taskNames[TaskCount], taskname);
-	taskNameLen[TaskCount] = strlen(taskname); 
+	taskGroupHash += HashString(taskname, strlen(taskname));
 	++TaskCount;
 }
 
@@ -506,22 +512,10 @@ void __stdcall RunTask(int num) {
     }
 }
 
-unsigned int HashString(const char* str, size_t length) {
-    unsigned int hash = 5381;
-    for (size_t i = 0; i < length; ++i) {
-        hash = ((hash << 5) + hash) + str[i];
-    }
-    return hash;
-}
-
 string GenerateGroupKey() {
-    unsigned int sum = 0;
-    for (int i = 0; i < TaskCount; ++i) {
-        sum += HashString(taskNames[i], taskNameLen[i]);
-    }
-	sum += HashString(GroupName, strlen(GroupName));
+	taskGroupHash += HashString(GroupName, strlen(GroupName));
 	string res = "GK";
-	res += to_string(sum);
+	res += to_string(taskGroupHash);
     return res;
 }
 
