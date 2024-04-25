@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <cstdio>
 #include "pt4taskmaker.h"
 
 using ShortString = char[256];

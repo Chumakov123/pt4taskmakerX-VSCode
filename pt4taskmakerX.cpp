@@ -1,9 +1,8 @@
 #include <cmath>
 #include <random>
 #include <ctime>
+#include <cstring>
 #include <algorithm>
-#include <fstream>
-#include <iomanip>
 #include "pt4taskmakerX.h"
 
 char GroupName[100];
@@ -53,22 +52,22 @@ bool CheckTT() {
 }
 
 int wreal(int w, double x) {
-	int result = w;
-	if (w == 0) {
-		ostringstream oss;
+    int result = w;
+    if (w == 0) {
+        char buffer[100];
         if (fmt[0] == 'f') {
             int precision = std::stoi(fmt.substr(1));
-            oss << std::fixed << std::setprecision(precision) << x;
+            std::sprintf(buffer, "%.*f", precision, x);
         } else if (fmt[0] == 'e') {
             int exponent = std::stoi(fmt.substr(1));
-            oss << std::scientific << std::setprecision(exponent - 1) << x;
+            std::sprintf(buffer, "%.*e", exponent - 1, x);
         }
-        result = oss.str().length();
+        result = strlen(buffer);
         // if (pr <= 0 && x >= 0) {
         //     result += 1;
         // }
-	}
-	return result;
+    }
+    return result;
 }
 
 int winteger(int w, int x) {
@@ -637,13 +636,19 @@ void pt4taskmakerX::DataFileInteger(const char* FileName) {
 	}
 	size_t w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		int a;
-        while (file.read(reinterpret_cast<char*>(&a), sizeof(int))) {
-            string s = to_string(a);
-            if (s.length() > w)
-                w = s.length();
-        }
+        FILE* file = std::fopen(FileName, "rb");
+        if (file != nullptr) {
+            int a;
+            while (std::fread(&a, sizeof(int), 1, file) == 1) {
+                char buffer[100];
+                std::sprintf(buffer, "%d", a);
+                size_t len = std::strlen(buffer);
+                if (len > w) {
+                    w = len;
+                }
+            }
+            std::fclose(file);
+		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
         DataComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
@@ -661,13 +666,16 @@ void pt4taskmakerX::DataFileReal(const char* FileName) {
 	}
 	int w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		double a;
-		while (file.read(reinterpret_cast<char*>(&a), sizeof(double))) {
-			int s = wreal(0, a);
-			if (s > w) {
-				w = s;
+		FILE* file = std::fopen(FileName, "rb");
+		if (file != nullptr) {
+			double a;
+			while (std::fread(&a, sizeof(double), 1, file) == 1) {
+				int s = wreal(0, a);
+				if (s > w) {
+					w = s;
+				}
 			}
+			std::fclose(file);
 		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
@@ -696,12 +704,16 @@ void pt4taskmakerX::DataFileString(const char* FileName) {
 	}
 	size_t w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		ShortString a;
-        while (file.read(reinterpret_cast<char*>(&a), sizeof(ShortString))) {
-            if (strlen(a) > w)
-                w = strlen(a);
-        }
+		FILE* file = std::fopen(FileName, "rb");
+		if (file != nullptr) {
+			ShortString a;
+			while (std::fread(&a, sizeof(ShortString), 1, file) == 1) {
+				size_t len = std::strlen(a);
+				if (len > w)
+					w = len;
+			}
+			std::fclose(file);
+		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
         DataComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
@@ -734,13 +746,17 @@ void pt4taskmakerX::ResFileInteger(const char* FileName) {
 	}
 	size_t w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		int a;
-        while (file.read(reinterpret_cast<char*>(&a), sizeof(int))) {
-            string s = to_string(a);
-            if (s.length() > w)
-                w = s.length();
-        }
+		FILE* file = std::fopen(FileName, "rb");
+		if (file != nullptr) {
+			int a;
+			while (std::fread(&a, sizeof(int), 1, file) == 1) {
+				std::string s = std::to_string(a);
+				size_t len = s.length();
+				if (len > w)
+					w = len;
+			}
+			std::fclose(file);
+		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
         ResComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
@@ -759,13 +775,16 @@ void pt4taskmakerX::ResFileReal(const char* FileName) {
 	}
 	int w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		double a;
-		while (file.read(reinterpret_cast<char*>(&a), sizeof(double))) {
-			int s = wreal(0, a);
-			if (s > w) {
-				w = s;
+		FILE* file = std::fopen(FileName, "rb");
+		if (file != nullptr) {
+			double a;
+			while (std::fread(&a, sizeof(double), 1, file) == 1) {
+				int s = wreal(0, a);
+				if (s > w) {
+					w = s;
+				}
 			}
+			std::fclose(file);
 		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
@@ -794,12 +813,16 @@ void pt4taskmakerX::ResFileString(const char* FileName) {
 	}
 	size_t w = 0;
 	try {
-		ifstream file(FileName, ios::binary);
-		ShortString a;
-        while (file.read(reinterpret_cast<char*>(&a), sizeof(ShortString))) {
-            if (strlen(a) > w)
-                w = strlen(a);
-        }
+		FILE* file = std::fopen(FileName, "rb");
+		if (file != nullptr) {
+			ShortString a;
+			while (std::fread(&a, sizeof(ShortString), 1, file) == 1) {
+				size_t len = std::strlen(a);
+				if (len > w)
+					w = len;
+			}
+			std::fclose(file);
+		}
 	} catch (const std::exception& ex) {
 		string fname(FileName);
         ResComm(("\\B"+ErrorMessage("FileError("+ fname +"): ") + ex.what()).c_str());
