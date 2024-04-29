@@ -222,22 +222,22 @@ void pt4taskmakerX::Data(const std::vector<char>& seq) {
 		DataInternal("", e, pt4taskmaker::Center(i, n, w, 2), yd, w);
 	}
 }
-void pt4taskmakerX::Data(const std::vector<const char*>& seq) {
+void pt4taskmakerX::Data(const std::vector<string>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
 	if (n == 0) return;
 	++yd;
-	int max_length = 0;
-    for (const string& s : seq) {
-        max_length = max(max_length, static_cast<int>(s.length()));
+	size_t max_length = 0;
+    for (auto s : seq) {
+        max_length = max(max_length, s.length());
     }
 	int w = max_length + 2;
 	int wmax = 80 / (w + 2);
     if (n > wmax) n = wmax;
 
 	int i = 0;
-    for (const std::string& e : seq) {
+    for (auto e : seq) {
         ++i;
         if (i > wmax) {
             ++yd;
@@ -359,22 +359,22 @@ void pt4taskmakerX::Res(const std::vector<char>& seq) {
 		ResInternal("", e, pt4taskmaker::Center(i, n, w, 2), yr, w);
 	}
 }
-void pt4taskmakerX::Res(const std::vector<const char*>& seq) {
+void pt4taskmakerX::Res(const std::vector<string>& seq) {
 	if (CheckTT())
 		return;
 	int n = seq.size();
 	if (n == 0) return;
 	++yr;
-	int max_length = 0;
-    for (const string& s : seq) {
-        max_length = max(max_length, static_cast<int>(s.length()));
+	size_t max_length = 0;
+    for (auto s : seq) {
+        max_length = max(max_length, s.length());
     }
 	int w = max_length + 2;
 	int wmax = 80 / (w + 2);
     if (n > wmax) n = wmax;
 
 	int i = 0;
-    for (const std::string& e : seq) {
+    for (auto e : seq) {
         ++i;
         if (i > wmax) {
             ++yr;

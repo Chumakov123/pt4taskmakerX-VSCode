@@ -140,7 +140,7 @@ namespace pt4taskmakerX
 	void Data(const std::vector<char>& seq);
 
 	/// Добавляет последовательность строк в раздел исходных данных.
-	void Data(const std::vector<const char*>& seq);
+	void Data(const std::vector<string>& seq);
 
 	void Res(const char* s, bool a, int x, int y, int w);
     void Res(const char* s, int a, int x, int y, int w);
@@ -155,46 +155,46 @@ namespace pt4taskmakerX
 	template<typename T>
 	void Res(const char* comm, T a) {
 		if (CheckTT()) return;
-		++yd;
-		ResInternal(comm, a, 0, yd, wd);
+		++yr;
+		ResInternal(comm, a, 0, yr, wd);
 	}
 
 	/// Добавляет данные и комментарии в новой строке раздела результатов.
 	template<typename T>
 	void Res(const char* comm1, T a1, const char* comm2) {
 		if (CheckTT()) return;
-		++yd;
-		ResInternal(comm1, a1, xLeft, yd, wd);
-		pt4taskmaker::ResultComment(comm2, xRight, yd);
+		++yr;
+		ResInternal(comm1, a1, xLeft, yr, wd);
+		pt4taskmaker::ResultComment(comm2, xRight, yr);
 	}
 
 	/// Добавляет данные и комментарии в новой строке раздела результатов.
 	template<typename T1, typename T2>
 	void Res(const char* comm1, T1 a1, const char* comm2, T2 a2) {
 		if (CheckTT()) return;
-		++yd;
-		ResInternal(comm1, a1, xLeft, yd, wd);
-		ResInternal(comm2, a2, xRight, yd, wd);
+		++yr;
+		ResInternal(comm1, a1, xLeft, yr, wd);
+		ResInternal(comm2, a2, xRight, yr, wd);
 	}
 
 	/// Добавляет данные и комментарии в новой строке раздела результатов.
 	template<typename T1, typename T2>
 	void Res(const char* comm1, T1 a1, const char* comm2, T2 a2, const char* comm3) {
 		if (CheckTT()) return;
-		++yd;
-		ResInternal(comm1, a1, xLeft, yd, wd);
-		ResInternal(comm2, a2, 0, yd, wd);
-		pt4taskmaker::ResultComment(comm3, xRight, yd);
+		++yr;
+		ResInternal(comm1, a1, xLeft, yr, wd);
+		ResInternal(comm2, a2, 0, yr, wd);
+		pt4taskmaker::ResultComment(comm3, xRight, yr);
 	}
 
 	/// Добавляет данные и комментарии в новой строке раздела результатов.
 	template<typename T1, typename T2, typename T3>
 	void Res(const char* comm1, T1 a1, const char* comm2, T2 a2, const char* comm3, T3 a3) {
 		if (CheckTT()) return;
-		++yd;
-		ResInternal(comm1, a1, xLeft, yd, wd);
+		++yr;
+		ResInternal(comm1, a1, xLeft, yr, wd);
 		ResInternal(comm2, a2, 0, yd, wd);
-		ResInternal(comm3, a3, xRight, yd, wd);
+		ResInternal(comm3, a3, xRight, yr, wd);
 	}
 
 	/// Добавляет последовательность логических данных в раздел результатов.
@@ -210,7 +210,7 @@ namespace pt4taskmakerX
 	void Res(const std::vector<char>& seq);
 
 	/// Добавляет последовательность строк в раздел результатов.
-	void Res(const std::vector<const char*>& seq);
+	void Res(const std::vector<string>& seq);
 	
 	/// Задает минимальную ширину поля вывода для числовых данных
 	/// (числа выравниваются по правому краю поля вывода, 
@@ -491,7 +491,7 @@ namespace pt4taskmakerX
 		}
 
 		/// Добавляет последовательность строк в раздел исходных данных.
-		static void Data(const std::vector<const char*>& seq) {
+		static void Data(const std::vector<string>& seq) {
 			pt4taskmakerX::Data(seq);
 		}
 
@@ -551,7 +551,7 @@ namespace pt4taskmakerX
 		}
 
 		/// Добавляет последовательность строк в раздел результатов.
-		static void Res(const std::vector<const char*>& seq) {
+		static void Res(const std::vector<string>& seq) {
 			pt4taskmakerX::Res(seq);
 		}
 
