@@ -2,14 +2,12 @@
     "files.associations": {
         "cmath": "cpp",
         "*.tcc": "cpp",
-        "iomanip": "cpp",
         "array": "cpp",
         "deque": "cpp",
         "string": "cpp",
         "vector": "cpp",
         "iterator": "cpp",
         "string_view": "cpp",
-        "functional": "cpp",
         "typeinfo": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
@@ -47,6 +45,5 @@
         "streambuf": "cpp",
         "list": "cpp",
         "*.tpp": "cpp",
-        "iostream": "cpp"
     }
 }

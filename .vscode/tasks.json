@@ -12,14 +12,9 @@
 				"-m32",
 				"-fdata-sections",
 				"-ffunction-sections",
-				"-fomit-frame-pointer",
-				"-s",
 				"-oS",
 				"-Og",
-				"-fmerge-all-constants",
-				"-fvisibility=hidden",
-				"-static-libgcc",
-				"-static-libstdc++",
+				"-O2",
 				"-shared",
 				"${fileDirname}\\pt4taskmakerX.cpp",
 				"${fileDirname}\\pt4taskmaker.cpp",
@@ -27,7 +22,7 @@
 				"-o",
 				"${fileDirname}\\PT4${fileBasenameNoExtension}.dll",
 				"${fileDirname}\\pt4taskmaker.def",
-				"-Wl,--enable-stdcall-fixup,--gc-sections,--strip-all",
+				"-Wl,--enable-stdcall-fixup,--gc-sections,--strip-all,-shared-libstdc++"
 			],
 			"options": {
 				"cwd": "C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/bin"

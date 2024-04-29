@@ -433,15 +433,13 @@ double pt4taskmakerX::Random1(double A, double B) {
 double pt4taskmakerX::Random2(double A, double B) {
 	return Random(round(A*100), round(B*100))/100 + Random() * 1.0e-7;
 }
+
 string pt4taskmakerX::RandomName(int len) {
     string result;
-
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<int> dis(0, alphabet_str.length()-1);
+	int n = alphabet_str.length();
 
     for (int i = 0; i < len; ++i) {
-		result.push_back(alphabet_str[dis(gen)]);
+		result.push_back(alphabet_str[pt4taskmakerX::Random(0, n - 1)]);
     }
 
     return result;

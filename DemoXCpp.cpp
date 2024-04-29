@@ -124,7 +124,7 @@ DefineTask(Task7) {
     ofstream t2(s2.c_str()), t1(s1.c_str());
     t2 << s << endl;
     t2.close();
-    char* s0 = "\r\n\r\n";
+    const char* s0 = "\r\n\r\n";
     size_t p = s.find(s0);
     while (p != string::npos)
     {
